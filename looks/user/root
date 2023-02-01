@@ -70,6 +70,7 @@ gtk.monospace_font_name: gtk_monospace_font_name
 #define color_bgterminal  #404552
 #define color_bgbar       #2A2D35
 #define color_bgbar_focus #4C4C5D
+#define color_background  #050505
 
 ! --------------------------------------------
 ! -- Wallpaper 
@@ -78,17 +79,17 @@ gtk.monospace_font_name: gtk_monospace_font_name
 ! -- Specify either a complete file path to an image
 ! -- and (optionally) options how to display the file
 
-regolith.wallpaper.file:
-regolith.wallpaper.options:
+regolith.wallpaper.file: /home/scopp/.config/regolith2/looks/user/wallpaper.jpg
+regolith.wallpaper.options: centered
 
 !-- *Or* specify a color
 
-regolith.wallpaper.color.primary: color_dark_2
+regolith.wallpaper.color.primary: color_background
 
 !-- If specifying a primary color, optional additional settings
 
-regolith.wallpaper.color.secondary: color_dark_1
-regolith.wallpaper.color.shading.type: vertical
+regolith.wallpaper.color.secondary:
+regolith.wallpaper.color.shading.type:
 
 ! --------------------------------------------
 ! -- Lockscreen Wallpaper 
