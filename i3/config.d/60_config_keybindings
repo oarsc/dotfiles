@@ -11,8 +11,8 @@ bindsym $mod+d exec --no-startup-id regolith-control-center display
 ## Modify // Wifi Settings // <> w ##
 bindsym $mod+w exec --no-startup-id regolith-control-center wifi
 
-## Modify // Bluetooth Settings // <> b ##
-bindsym $mod+b exec --no-startup-id regolith-control-center bluetooth
+## Modify // Sound Settings // <> s ##
+bindsym $mod+s exec --no-startup-id regolith-control-center sound
 
 ## Launch // File Browser // <><Shift> n ##
 bindsym $mod+Shift+n exec --no-startup-id /usr/bin/caja .
