@@ -14,8 +14,8 @@ regolith.look: default
 ! -- Theme elements
 ! --------------------------------------------
 
-gtk.theme_name: Adwaita-dark
-gtk.icon_theme_name: hicolor
+gtk.theme_name: ARK-Dark
+gtk.icon_theme_name: Tela-pink-dark
 
 ! --------------------------------------------
 ! -- Fonts
