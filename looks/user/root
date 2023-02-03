@@ -62,9 +62,10 @@ gtk.monospace_font_name: gtk_monospace_font_name
 #define color_ltcyan   #34E2E2
 #define color_green    #4E9A06
 #define color_ltgreen  #8AE234
-#define color_brown    #B5835A
 #define color_dkwhite  #D3D7CF
 #define color_white    #EEEEEC
+
+#define color_brown    #B5835A
 
 ! -- Custom
 #define color_bgterminal  #404552
