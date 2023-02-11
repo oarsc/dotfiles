@@ -16,6 +16,7 @@ ln -s $PWD/gtk3.0/settings.ini ~/.config/gtk3.0/settings.ini
 mkdir ~/.local/bin
 git clone https://github.com/firecat53/networkmanager-dmenu.git --depth 1
 cd networkmanager-dmenu
+mkdir -p ~/.local/bin ~/.local/share/applications
 cp networkmanager_dmenu ~/.local/bin
 cp networkmanager_dmenu.desktop ~/.local/share/applications/
 cd ..
