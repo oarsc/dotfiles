@@ -2,12 +2,12 @@
 
 sudo apt install -y bspwm sxhkd kitty dmenu polybar rofi apcalc
 
-rm -fr ~/.config/bspwm ~/.config/sxhkd ~/.config/polybar
+rm -fr ~/.config/bspwm ~/.config/sxhkd ~/.config/polybar ~/.config/kitty
 
 ln -s $PWD/bspwm ~/.config/bspwm
 ln -s $PWD/sxhkd ~/.config/sxhkd
 ln -s $PWD/polybar ~/.config/polybar
-
+ln -s $PWD/kitty ~/.config/kitty
 
 # Install networkmanager-dmenu
 #sudo apt install -y libnm-dev
