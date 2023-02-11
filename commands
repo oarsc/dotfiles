@@ -2,17 +2,19 @@
 
 sudo apt install -y bspwm sxhkd kitty dmenu polybar rofi apcalc
 
-rm -fr ~/.config/bspwm ~/.config/sxhkd ~/.config/polybar ~/.config/kitty
+mkdir -p ~/.config/gtk3.0
+rm -fr ~/.config/bspwm ~/.config/sxhkd ~/.config/polybar ~/.config/kitty ~/.config/gtk3.0/settings.ini
 
 ln -s $PWD/bspwm ~/.config/bspwm
 ln -s $PWD/sxhkd ~/.config/sxhkd
 ln -s $PWD/polybar ~/.config/polybar
 ln -s $PWD/kitty ~/.config/kitty
+ln -s $PWD/gtk3.0/settings.ini ~/.config/gtk3.0/settings.ini
 
 # Install networkmanager-dmenu
 #sudo apt install -y libnm-dev
 mkdir ~/.local/bin
-git clone https://github.com/firecat53/networkmanager-dmenu.git
+git clone https://github.com/firecat53/networkmanager-dmenu.git --depth 1
 cd networkmanager-dmenu
 cp networkmanager_dmenu ~/.local/bin
 cp networkmanager_dmenu.desktop ~/.local/share/applications/
@@ -23,5 +25,21 @@ rm -fr networkmanager-dmenu
 mkdir -p ~/.local/share/fonts
 cp -rf $PWD/fonts/* ~/.local/share/fonts
 
-# Default configuration
-xset r rate 250 40
+# Install cursor
+sudo apt install breeze-cursor-theme
+
+# Install icons
+git clone https://github.com/vinceliuice/Tela-icon-theme.git --depth 1
+cd Tela-icon-theme
+./install.sh -a
+cd ..
+rm -fr Tela-icon-theme
+
+# Install Themes
+git clone https://github.com/ParrotSec/parrot-themes.git --depth 1
+cd parrot-themes
+mkdir -p ~/.themes
+mv themes/* ~/.themes
+cd ..
+rm -fr parrot-themes
+
