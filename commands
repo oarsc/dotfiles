@@ -1,3 +1,5 @@
+#!/bin/bash
+
 sudo apt install bspwm sxhkd kitty dmenu polybar rofi apcalc
 
 rm -fr ~/.config/bspwm ~/.config/sxhkd ~/.config/polybar
@@ -6,3 +8,6 @@ ln -s $PWD/bspwm ~/.config/bspwm
 ln -s $PWD/sxhkd ~/.config/sxhkd
 ln -s $PWD/polybar ~/.config/polybar
 
+# Install fonts
+mkdir -p ~/.local/share/fonts
+cp -rf $PWD/fonts/* ~/.local/share/fonts
