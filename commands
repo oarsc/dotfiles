@@ -1,12 +1,25 @@
 #!/bin/bash
 
-sudo apt install bspwm sxhkd kitty dmenu polybar rofi apcalc
+sudo apt install -y bspwm sxhkd kitty dmenu polybar rofi apcalc
 
 rm -fr ~/.config/bspwm ~/.config/sxhkd ~/.config/polybar
 
 ln -s $PWD/bspwm ~/.config/bspwm
 ln -s $PWD/sxhkd ~/.config/sxhkd
 ln -s $PWD/polybar ~/.config/polybar
+
+
+# Install networkmanager-dmenu
+#sudo apt install -y libnm-dev
+mkdir ~/.local/bin
+git clone https://github.com/firecat53/networkmanager-dmenu.git
+cd networkmanager-dmenu
+cp networkmanager_dmenu ~/.local/bin
+cp networkmanager_dmenu.desktop ~/.local/share/applications/
+cd ..
+rm -fr networkmanager-dmenu
+
+
 
 # Install fonts
 mkdir -p ~/.local/share/fonts
