@@ -19,8 +19,9 @@ cp networkmanager_dmenu.desktop ~/.local/share/applications/
 cd ..
 rm -fr networkmanager-dmenu
 
-
-
 # Install fonts
 mkdir -p ~/.local/share/fonts
 cp -rf $PWD/fonts/* ~/.local/share/fonts
+
+# Default configuration
+xset r rate 250 40
