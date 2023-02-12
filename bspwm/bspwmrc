@@ -1,5 +1,7 @@
 #!/bin/bash
 
+BASEDIR=$(dirname "$0")
+
 pgrep -x sxhkd > /dev/null || sxhkd &
 $HOME/.config/polybar/launch.sh &
 
@@ -9,6 +11,7 @@ bspc config border_width         2
 bspc config window_gap          12
 
 bspc config split_ratio          0.52
+bspc config single_monocle       false
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
@@ -18,5 +21,13 @@ bspc rule -a mplayer2 state=floating
 bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
 
-# Default configuration
+
+###########################
+## Default configuration ##
+###########################
+
+# Keyboard repeat rate
 xset r rate 250 40
+
+# Wallpaper
+feh --bg-center $BASEDIR/wallpaper.jpg --image-bg "#050505"

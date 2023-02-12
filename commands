@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt install -y bspwm sxhkd kitty dmenu polybar rofi apcalc
+sudo apt install -y bspwm sxhkd feh kitty dmenu polybar rofi apcalc
 
 mkdir -p ~/.config/gtk-3.0
 rm -fr ~/.config/bspwm ~/.config/sxhkd ~/.config/polybar ~/.config/kitty ~/.config/gtk-3.0/settings.ini
