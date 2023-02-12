@@ -10,9 +10,13 @@ super + Return
 super + shift + Return
 	gtk-launch $(xdg-settings get default-web-browser)
 
+# file browser
+{super + shift + n,super + e}
+	nemo
+
 # program launcher
-super + shift + @space
-	dmenu_run
+{super + shift + @space,alt + F2}
+	dmenu_run -b
 
 super +  @space
 	~/.config/polybar/scripts/launcher.sh
