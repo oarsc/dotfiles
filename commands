@@ -1,14 +1,16 @@
 #!/bin/bash
 
-sudo apt install -y bspwm sxhkd feh kitty dmenu polybar rofi apcalc
+sudo apt install -y bspwm sxhkd feh kitty dmenu polybar picom rofi apcalc
 
 mkdir -p ~/.config/gtk-3.0
-rm -fr ~/.config/bspwm ~/.config/sxhkd ~/.config/polybar ~/.config/kitty ~/.config/gtk-3.0/settings.ini
+rm -fr ~/.config/bspwm ~/.config/sxhkd ~/.config/polybar ~/.config/kitty \
+    ~/.config/picom ~/.config/gtk-3.0/settings.ini
 
 ln -s $PWD/bspwm ~/.config/bspwm
 ln -s $PWD/sxhkd ~/.config/sxhkd
 ln -s $PWD/polybar ~/.config/polybar
 ln -s $PWD/kitty ~/.config/kitty
+ln -s $PWD/picom ~/.config/picom
 ln -s $PWD/gtk-3.0/settings.ini ~/.config/gtk-3.0/settings.ini
 
 # Install networkmanager-dmenu
