@@ -105,6 +105,18 @@ super + {1-9,0}
 # send to the given desktop
 super + shift + {1-9,0}
 	bspc node -d '^{1-9,10}' --follow
+	
+# focus next/prev monitor
+super + {dead_acute,ccedilla}
+	bspc monitor -f {prev,next}
+	
+# move to next/prev monitor
+super + shift + {dead_acute,ccedilla}
+	bspc node -m {prev,next} --follow
+	
+# swap monitors
+super + ctrl + shift + {dead_acute,ccedilla}
+	bspc monitor -s {prev,next}
 
 
 #
@@ -142,9 +154,12 @@ super + alt + shift + {h,j,k,l}
 # move a floating window
 super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
+	
 
-
+#
 # control sound
+#
+
 XF86AudioRaiseVolume
     pactl set-sink-volume 0 +5%
 XF86AudioLowerVolume
