@@ -8,7 +8,7 @@ super + Return
 
 # terminal webbrowser
 super + shift + Return
-	gtk-launch $(xdg-settings get default-web-browser)
+	gtk-launch "$(xdg-settings get default-web-browser)"
 
 # file browser
 {super + shift + n,super + e}

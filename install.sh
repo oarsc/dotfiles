@@ -1,33 +1,38 @@
 #!/bin/bash
 
+BASEDIR=$(dirname "$0")
+
 sudo apt install -y bspwm sxhkd feh kitty dmenu polybar picom rofi apcalc
 
-mkdir -p ~/.config/gtk-3.0
-rm -fr ~/.config/bspwm ~/.config/sxhkd ~/.config/polybar ~/.config/kitty \
-    ~/.config/picom ~/.config/gtk-3.0/settings.ini
+mkdir -p "$HOME/.config/gtk-3.0"
+rm -fr "$HOME/.config/bspwm" "$HOME/.config/sxhkd" "$HOME/.config/polybar" \
+       "$HOME/.config/kitty" "$HOME/.config/picom" "$HOME/.config/gtk-3.0/settings.ini" \
+       "$HOME/.xprofile"
 
-ln -s $PWD/bspwm ~/.config/bspwm
-ln -s $PWD/sxhkd ~/.config/sxhkd
-ln -s $PWD/polybar ~/.config/polybar
-ln -s $PWD/kitty ~/.config/kitty
-ln -s $PWD/picom ~/.config/picom
-ln -s $PWD/gtk-3.0/settings.ini ~/.config/gtk-3.0/settings.ini
+ln -s "$BASEDIR/bspwm"                "$HOME/.config/bspwm"
+ln -s "$BASEDIR/sxhkd"                "$HOME/.config/sxhkd"
+ln -s "$BASEDIR/polybar"              "$HOME/.config/polybar"
+ln -s "$BASEDIR/kitty"                "$HOME/.config/kitty"
+ln -s "$BASEDIR/picom"                "$HOME/.config/picom"
+ln -s "$BASEDIR/gtk-3.0/settings.ini" "$HOME/.config/gtk-3.0/settings.ini"
+ln -s "$BASEDIR/.xprofile"            "$HOME/.xprofile"
+
 
 # Install networkmanager-dmenu
-#sudo apt install -y libnm-dev
-mkdir ~/.local/bin
+sudo apt install -y libnm-dev
+mkdir "$HOME/.local/bin"
 git clone https://github.com/firecat53/networkmanager-dmenu.git --depth 1
 cd networkmanager-dmenu
-mkdir -p ~/.local/bin
-mkdir -p ~/.local/share/applications
-cp networkmanager_dmenu ~/.local/bin
-cp networkmanager_dmenu.desktop ~/.local/share/applications/
+mkdir -p "$HOME/.local/bin"
+mkdir -p "$HOME/.local/share/applications"
+cp networkmanager_dmenu "$HOME/.local/bin"
+cp networkmanager_dmenu.desktop "$HOME/.local/share/applications/"
 cd ..
 rm -fr networkmanager-dmenu
 
 # Install fonts
-mkdir -p ~/.local/share/fonts
-cp -rf $PWD/fonts/* ~/.local/share/fonts
+mkdir -p "$HOME/.local/share/fonts"
+cp -rf "$BASEDIR/fonts/*" "$HOME/.local/share/fonts"
 
 # Install cursor
 sudo apt install breeze-cursor-theme
@@ -42,8 +47,8 @@ rm -fr Tela-icon-theme
 # Install Themes
 git clone https://github.com/ParrotSec/parrot-themes.git --depth 1
 cd parrot-themes
-mkdir -p ~/.themes
-mv themes/* ~/.themes
+mkdir -p "$HOME/.themes"
+mv themes/* "$HOME/.themes"
 cd ..
 rm -fr parrot-themes
 
