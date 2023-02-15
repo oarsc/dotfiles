@@ -108,15 +108,15 @@ super + shift + {1-9,0}
 	
 # focus next/prev monitor
 super + {dead_acute,ccedilla}
-	bspc monitor -f {prev,next}
+	bspc monitor -f {west,east}
 	
 # move to next/prev monitor
 super + shift + {dead_acute,ccedilla}
-	bspc node -m {prev,next} --follow
+	bspc node -m {west,east} --follow
 	
 # swap monitors
 super + ctrl + shift + {dead_acute,ccedilla}
-	bspc monitor -s {prev,next}
+	bspc monitor -s {west,east}
 
 
 #

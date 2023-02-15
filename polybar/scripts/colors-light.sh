@@ -7,17 +7,26 @@ RFILE="$HOME/.config/polybar/scripts/rofi/colors.rasi"
 # Change colors
 change_color() {
 	# polybar
-	sed -i -e 's/background = #.*/background = #FFFFFF/g' $PFILE
-	sed -i -e 's/foreground = #.*/foreground = #FFFFFF/g' $PFILE
-	sed -i -e 's/foreground-alt = #.*/foreground-alt = #656565/g' $PFILE
-	sed -i -e "s/shade1 = #.*/shade1 = $SH1/g" $PFILE
-	sed -i -e "s/shade2 = #.*/shade2 = $SH2/g" $PFILE
-	sed -i -e "s/shade3 = #.*/shade3 = $SH3/g" $PFILE
-	sed -i -e "s/shade4 = #.*/shade4 = $SH4/g" $PFILE
-	sed -i -e "s/shade5 = #.*/shade5 = $SH5/g" $PFILE
-	sed -i -e "s/shade6 = #.*/shade6 = $SH6/g" $PFILE
-	sed -i -e "s/shade7 = #.*/shade7 = $SH7/g" $PFILE
-	sed -i -e "s/shade8 = #.*/shade8 = $SH8/g" $PFILE
+	cat > $PFILE <<- EOF
+	[color]
+	;; main colors
+	background = #FFF
+	background-alt = #BBB
+	dimmed = #666
+	foreground = #FFF
+	foreground-contrast = #555
+	foreground-alt = #656565
+
+	;; shades
+	shade1 = ${SH1}
+	shade2 = ${SH2}
+	shade3 = ${SH3}
+	shade4 = ${SH4}
+	shade5 = ${SH5}
+	shade6 = ${SH6}
+	shade7 = ${SH7}
+	shade8 = ${SH8}
+	EOF
 	
 	# rofi
 	cat > $RFILE <<- EOF

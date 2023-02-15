@@ -11,4 +11,16 @@ killall -q polybar
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
 # Launch the bar
-polybar -q main -c "$DIR"/config.ini &
+if type "xrandr"; then
+
+  MONITORS=$(xrandr --query | grep " connected" | cut -d" " -f1 | tr '\n' ' ');
+  IFS=' ' read -r -a ARR_MONITORS <<< "$MONITORS"
+
+  MONITOR=${ARR_MONITORS[0]} polybar -q main -c "$DIR"/config.ini &
+  if [ ${ARR_MONITORS[1]} ]; then
+    MONITOR=${ARR_MONITORS[1]} polybar -q main-alt -c "$DIR"/config.ini &
+  fi
+
+else
+  polybar -q main -c "$DIR"/config.ini &
+fi
