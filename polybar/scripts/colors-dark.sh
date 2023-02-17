@@ -12,9 +12,7 @@ change_color() {
 	;; main colors
 	background = #1F1F1F
 	background-alt = #3F3F3F
-	dimmed = #666
 	foreground = #FFF
-	foreground-contrast = #FFF
 	foreground-alt = #8F8F8F
 
 	;; shades
