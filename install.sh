@@ -1,20 +1,23 @@
 #!/bin/bash
 
 BASEDIR=$(dirname "$0")
+CONFIGDIR="$HOME/.config"
 
 sudo apt install -y bspwm sxhkd feh kitty dmenu polybar picom rofi apcalc
 
-mkdir -p "$HOME/.config/gtk-3.0"
-rm -fr "$HOME/.config/bspwm" "$HOME/.config/sxhkd" "$HOME/.config/polybar" \
-       "$HOME/.config/kitty" "$HOME/.config/picom" "$HOME/.config/gtk-3.0/settings.ini" \
-       "$HOME/.xprofile"
+mkdir -p "$CONFIGDIR/gtk-3.0"
+rm -fr "$CONFIGDIR/bspwm" "$CONFIGDIR/sxhkd" "$CONFIGDIR/polybar" \
+       "$CONFIGDIR/kitty" "$CONFIGDIR/picom" "$CONFIGDIR/gtk-3.0/settings.ini" \
+       "$CONFIGDIR/zsh" "$HOME/.zshrc" "$HOME/.xprofile"
 
-ln -s "$BASEDIR/bspwm"                "$HOME/.config/bspwm"
-ln -s "$BASEDIR/sxhkd"                "$HOME/.config/sxhkd"
-ln -s "$BASEDIR/polybar"              "$HOME/.config/polybar"
-ln -s "$BASEDIR/kitty"                "$HOME/.config/kitty"
-ln -s "$BASEDIR/picom"                "$HOME/.config/picom"
-ln -s "$BASEDIR/gtk-3.0/settings.ini" "$HOME/.config/gtk-3.0/settings.ini"
+ln -s "$BASEDIR/bspwm"                "$CONFIGDIR/bspwm"
+ln -s "$BASEDIR/sxhkd"                "$CONFIGDIR/sxhkd"
+ln -s "$BASEDIR/polybar"              "$CONFIGDIR/polybar"
+ln -s "$BASEDIR/kitty"                "$CONFIGDIR/kitty"
+ln -s "$BASEDIR/picom"                "$CONFIGDIR/picom"
+ln -s "$BASEDIR/gtk-3.0/settings.ini" "$CONFIGDIR/gtk-3.0/settings.ini"
+ln -s "$BASEDIR/zsh"                  "$CONFIGDIR/zsh"
+ln -s "$BASEDIR/.zshrc"               "$HOME/.zshrc"
 ln -s "$BASEDIR/.xprofile"            "$HOME/.xprofile"
 
 
