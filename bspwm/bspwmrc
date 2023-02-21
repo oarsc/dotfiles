@@ -50,12 +50,13 @@ bspc config gapless_monocle      true
 bspc rule -a ualth border=off
 
 
-###########################
-## Default configuration ##
-###########################
 
-# Keyboard repeat rate
+█▀█ █▀▀ █▀█ █▀ █▀█ █▄ █ ▄▀█ █     █▀▀ █▀█ █▄ █ █▀▀ █ █▀▀ █ █ █▀█ ▄▀█ ▀█▀ █ █▀█ █▄ █
+█▀▀ ██▄ █▀▄ ▄█ █▄█ █ ▀█ █▀█ █▄▄   █▄▄ █▄█ █ ▀█ █▀  █ █▄█ █▄█ █▀▄ █▀█  █  █ █▄█ █ ▀█
+
+# Keyboard and mouse configurations
 xset r rate 250 40
+xinput set-prop 'Logitech G502 HERO SE' 'libinput Accel Speed' 1
 
 # Wallpaper
 feh --bg-center $BASEDIR/wallpaper.jpg --image-bg "#050505"
