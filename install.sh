@@ -55,3 +55,12 @@ mv themes/* "$HOME/.themes"
 cd ..
 rm -fr parrot-themes
 
+# Nvim instructions
+wget -O ./nvim-linux64.deb "https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb"
+sudo apt install -y xclip ./nvim-linux64.deb
+rm ./nvim-linux64.deb
+
+git clone https://github.com/AstroNvim/AstroNvim ~/.config/nvim
+
+echo "- Please run \"nvim +PackerSync\" in order to finish configurating Astrovim"
+echo "- If executing \"nvim ~/.nvimrc\" shows an error, execute \":TSInstall vim\" to solve it"
