@@ -55,6 +55,10 @@ mv themes/* "$HOME/.themes"
 cd ..
 rm -fr parrot-themes
 
+# zsh Plugins
+git clone https://github.com/zsh-users/zsh-autosuggestions "$BASEDIR/zsh/plugins/zsh-autosuggestions"
+git clone https://github.com/rupa/z "$BASEDIR/zsh/plugins/z"
+
 # Nvim instructions
 wget -O ./nvim-linux64.deb "https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb"
 sudo apt install -y xclip ./nvim-linux64.deb
