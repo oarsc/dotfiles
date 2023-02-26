@@ -46,7 +46,7 @@ if type "xrandr"; then
   bspc monitor ${ARR_MONITORS[0]} -d I II III IV V VI
 
   if [ ${ARR_MONITORS[1]} ]; then
-    bspc monitor ${ARR_MONITORS[1]} -d I II III IV
+    bspc monitor ${ARR_MONITORS[1]} -d VII VIII IX X
   fi
 
 else

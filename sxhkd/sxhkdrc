@@ -47,8 +47,8 @@ super + {shift,alt} + q
 super + m
 	bspc desktop -l next
 
-# send the newest marked node to the newest preselected node
-super + y
+ send the newest marked node to the newest preselected node
+ super + y
 	bspc node newest.marked.local -n newest.!automatic.local
 
 # swap the current node and the biggest window
@@ -94,6 +94,10 @@ super + shift + {dead_grave,plus}
 # focus the last node/desktop
 super + {q,Tab}
 	bspc {node,desktop} -f last
+
+# swap monitors
+super + masculine
+	~/.config/bspwm/scripts/swap_monitors.sh
 
 # focus the older or newer node in the focus history
 super + {o,i}
