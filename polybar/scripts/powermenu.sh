@@ -11,11 +11,12 @@ uptime=$(uptime -p | sed -e 's/up //g')
 rofi_command="rofi -no-config -theme $dir/powermenu.rasi"
 
 # Options
-shutdown=" Shutdown"
-reboot=" Restart"
 lock=" Lock"
+reload=" Reload bspwm"
 suspend=" Sleep"
 logout=" Logout"
+reboot=" Restart"
+shutdown=" Shutdown"
 
 # Confirmation
 confirm_exit() {
@@ -33,7 +34,7 @@ msg() {
 }
 
 # Variable passed to rofi
-options="$lock\n$suspend\n$logout\n$reboot\n$shutdown"
+options="$lock\n$reload\n$suspend\n$logout\n$reboot\n$shutdown"
 
 chosen="$(echo -e "$options" | $rofi_command -p "Uptime: $uptime" -dmenu -selected-row 0)"
 case $chosen in
@@ -58,11 +59,14 @@ case $chosen in
         fi
         ;;
     $lock)
-		if [[ -f /usr/bin/i3lock ]]; then
-			i3lock
+		if [[ -f /usr/bin/xsecurelock ]]; then
+			~/.config/bspwm/scripts/lock.sh
 		elif [[ -f /usr/bin/betterlockscreen ]]; then
 			betterlockscreen -l
 		fi
+        ;;
+    $reload)
+		$HOME/.config/bspwm/bspwmrc
         ;;
     $suspend)
 		ans=$(confirm_exit &)

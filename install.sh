@@ -3,7 +3,7 @@
 BASEDIR=$(dirname "$0")
 CONFIGDIR="$HOME/.config"
 
-sudo apt install -y bspwm sxhkd feh kitty dmenu polybar picom rofi apcalc
+sudo apt install -y bspwm sxhkd feh kitty dmenu polybar picom rofi xsecurelock
 
 mkdir -p "$CONFIGDIR/gtk-3.0"
 rm -fr "$CONFIGDIR/bspwm" "$CONFIGDIR/sxhkd" "$CONFIGDIR/polybar" \
