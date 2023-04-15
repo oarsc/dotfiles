@@ -3,7 +3,7 @@
 BASEDIR=$(dirname "$0")
 CONFIGDIR="$HOME/.config"
 
-sudo apt install -y bspwm sxhkd feh kitty dmenu polybar picom rofi xsecurelock scrot
+sudo apt install -y bspwm sxhkd feh kitty dmenu polybar picom rofi xsecurelock scrot dunst
 
 mkdir -p "$CONFIGDIR/gtk-3.0"
 rm -fr "$CONFIGDIR/bspwm" "$CONFIGDIR/sxhkd" "$CONFIGDIR/polybar" \
@@ -17,6 +17,7 @@ ln -s "$BASEDIR/kitty"                "$CONFIGDIR/kitty"
 ln -s "$BASEDIR/picom"                "$CONFIGDIR/picom"
 ln -s "$BASEDIR/gtk-3.0/settings.ini" "$CONFIGDIR/gtk-3.0/settings.ini"
 ln -s "$BASEDIR/zsh"                  "$CONFIGDIR/zsh"
+ln -s "$BASEDIR/dunst"                "$CONFIGDIR/dunst"
 ln -s "$BASEDIR/.zshrc"               "$HOME/.zshrc"
 ln -s "$BASEDIR/.xprofile"            "$HOME/.xprofile"
 
