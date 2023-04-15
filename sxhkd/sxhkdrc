@@ -167,6 +167,19 @@ super + {Left,Down,Up,Right}
 # control sound
 #
 
+super + {_,shift +}KP_Add
+	pactl set-sink-volume $(pactl get-default-sink) {+5%,+20%}
+
+super + {_,shift +}KP_Subtract
+	pactl set-sink-volume $(pactl get-default-sink) {-5%,-20%}
+
+super + KP_Multiply
+	pactl set-sink-mute $(pactl get-default-sink) toggle
+
+super + shift + KP_Multiply
+	~/.config/bspwm/scripts/sound_switch.sh
+
+# media keys
 XF86AudioRaiseVolume
     pactl set-sink-volume $(pactl get-default-sink) +5%
 
