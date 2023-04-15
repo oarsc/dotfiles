@@ -175,3 +175,23 @@ XF86AudioLowerVolume
 
 XF86AudioMute
     pactl set-sink-mute $(pactl get-default-sink) toggle
+
+
+#
+# screen-shots
+#
+
+@Print
+	scrot -e 'xclip -selection clipboard -t image/png -i $f'
+
+super + @Print
+	cd $HOME/Pictures && scrot
+
+alt + @Print
+	scrot -u -e 'xclip -selection clipboard -t image/png -i $f'
+
+shift + @Print
+	scrot -s -e 'xclip -selection clipboard -t image/png -i $f'
+
+super + shift + @s
+	scrot -s -e 'xclip -selection clipboard -t image/png -i $f'
