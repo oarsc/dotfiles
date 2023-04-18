@@ -3,6 +3,7 @@
 # Color files
 PFILE="$HOME/.config/polybar/colors.ini"
 RFILE="$HOME/.config/polybar/scripts/rofi/colors.rasi"
+DFILE="$HOME/.config/dunst/dunstrc"
 
 # Change colors
 change_color() {
@@ -41,7 +42,17 @@ change_color() {
 	}
 	EOF
 	
+	# dunst
+	sed -i -e "s/^    separator_color = \"#.*/    separator_color = \"$SH6\"/g" $DFILE
+	sed -i -e "s/^    background = \"#.*/    background = \"$SH4\"/g" $DFILE
+	sed -i -e "s/^    frame_color = \"#.*/    frame_color = \"$SH4\"/g" $DFILE
+	sed -i -e "s/^    foreground = \"#.*/    foreground = \"#FFFFFF\"/g" $DFILE
+
+	sed -i -e "s/^     background = \"#.*/     background = \"$SH5\"/g" $DFILE
+	sed -i -e "s/^     foreground = \"#.*/     foreground = \"#FFFFFF\"/g" $DFILE
+	
 	polybar-msg cmd restart
+	pkill -f dunst
 }
 
 if  [[ $1 = "--amber" ]]; then
