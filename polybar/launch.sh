@@ -13,7 +13,7 @@ while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 # Launch the bar
 if type "xrandr"; then
 
-  MONITORS=$(xrandr --query | grep " connected" | cut -d" " -f1 | tr '\n' ' ');
+  MONITORS=$(xrandr --query | grep " connected" | grep "+" | cut -d" " -f1 | tr '\n' ' ');
   IFS=' ' read -r -a ARR_MONITORS <<< "$MONITORS"
 
   MONITOR=${ARR_MONITORS[0]} polybar -q main -c "$DIR"/config.ini &
