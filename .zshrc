@@ -73,7 +73,6 @@ ZSH_CUSTOM="$HOME/.config/zsh"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     git
-    zsh-autosuggestions
     z
 )
 

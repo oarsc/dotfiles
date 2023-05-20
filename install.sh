@@ -57,7 +57,6 @@ cd ..
 rm -fr parrot-themes
 
 # zsh Plugins
-git clone https://github.com/zsh-users/zsh-autosuggestions "$BASEDIR/zsh/plugins/zsh-autosuggestions"
 git clone https://github.com/rupa/z "$BASEDIR/zsh/plugins/z"
 
 # Nvim instructions
