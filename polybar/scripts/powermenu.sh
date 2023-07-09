@@ -8,7 +8,7 @@
 dir="~/.config/polybar/scripts/rofi"
 uptime=$(uptime -p | sed -e 's/up //g')
 
-rofi_command="rofi -no-config -theme $dir/powermenu.rasi -monitor -4"
+rofi_command="rofi -no-config -theme $dir/powermenu.rasi -monitor -1"
 
 # Options
 lock=" Lock"
