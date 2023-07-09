@@ -86,6 +86,9 @@ setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_SPACE
 setopt HIST_FIND_NO_DUPS
 setopt HIST_SAVE_NO_DUPS
+setopt NO_HIST_VERIFY
+#unsetopt AUTOPUSHD
+
 
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -e
