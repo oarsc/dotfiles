@@ -66,8 +66,8 @@ bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
 wmname LG3D &
-bspc rule -a android-studio state=floating border=off follow=on
-bspc rule -a jetbrains-studio state=floating border=off follow=on
+bspc rule -a android-studio border=off follow=on
+bspc rule -a jetbrains-studio border=off follow=on
 bspc rule -a ualth border=off
 bspc rule -a Dlancockpit border=off state=floating
 #bspc rule -a Gimp desktop='^8' state=floating follow=on
