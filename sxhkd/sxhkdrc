@@ -50,8 +50,8 @@ super + {shift,alt} + q
 super + m
 	bspc desktop -l next
 
- send the newest marked node to the newest preselected node
- super + y
+# send the newest marked node to the newest preselected node
+super + y
 	bspc node newest.marked.local -n newest.!automatic.local
 
 # swap the current node and the biggest window
@@ -100,9 +100,21 @@ super + shift + {dead_grave,less,z,plus}
 super + {q,Tab}
 	bspc {node,desktop} -f last
 
-# swap monitors
+# move to last monitor
 super + masculine
+	bspc monitor -f last
+#	~/.config/bspwm/scripts/move_to_last_monitor.sh
+
+super + shift + masculine
+	~/.config/bspwm/scripts/move_to_last_monitor.sh follow
+
+# swap monitors
+super + ctrl + masculine
 	~/.config/bspwm/scripts/swap_monitors.sh
+
+# move to empty desktops
+super + {_,shift + }w
+	~/.config/bspwm/scripts/move_to_empty_desktop.sh {_,last}
 
 # focus the older or newer node in the focus history
 super + {o,i}
@@ -121,12 +133,12 @@ super + shift + {1-9,0}
 	bspc desktop -l tiled
 	
 # focus next/prev monitor
-super + {dead_acute,ccedilla}
-	bspc monitor -f {west,east}
+super + {dead_acute,a,s,ccedilla}
+	bspc monitor -f {west,west,east,east}
 	
 # move to next/prev monitor
-super + shift + {dead_acute,ccedilla}
-	bspc node -m {west,east} --follow
+super + shift + {dead_acute,a,s,ccedilla}
+	bspc node -m {west,west,east,east} --follow
 	
 # swap monitors
 super + ctrl + shift + {dead_acute,ccedilla}
@@ -138,19 +150,19 @@ super + ctrl + shift + {dead_acute,ccedilla}
 #
 
 # preselect the direction
-super + ctrl + {h,j,k,l}
+super + alt + {h,j,k,l}
 	bspc node -p {west,south,north,east}
 
 # preselect the ratio
-super + ctrl + {1-9}
+super + alt + {1-9}
 	bspc node -o 0.{1-9}
 
 # cancel the preselection for the focused node
-super + ctrl + space
+super + alt + space
 	bspc node -p cancel
 
 # cancel the preselection for the focused desktop
-super + ctrl + shift + space
+super + alt + shift + space
 	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
 
 #
@@ -158,11 +170,11 @@ super + ctrl + shift + space
 #
 
 # expand a window by moving one of its side outward
-super + alt + {h,j,k,l}
+super + ctrl + {h,j,k,l}
 	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
 
 # contract a window by moving one of its side inward
-super + alt + shift + {h,j,k,l}
+super + ctrl + shift + {h,j,k,l}
 	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
 
 # move a floating window

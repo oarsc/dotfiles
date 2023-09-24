@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 id_1="$(bspc query -D -d '^1:focused')" || exit 1
 id_2="$(bspc query -D -d '^2:focused')" || exit 1
