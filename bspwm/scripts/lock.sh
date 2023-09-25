@@ -6,4 +6,4 @@ export XSECURELOCK_PASSWORD_PROMPT=cursor
 export XSECURELOCK_SHOW_HOSTNAME=0
 export XSECURELOCK_SHOW_USERNAME=0
 
-xsecurelock
+(sleep 1; xset dpms force off) & xsecurelock
