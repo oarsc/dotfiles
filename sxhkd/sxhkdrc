@@ -201,17 +201,22 @@ XF86AudioMute
 # screen-shots
 #
 
+# Copy whole screen capture to clipboard
 @Print
-	scrot -e 'xclip -selection clipboard -t image/png -i $f'
+	scrot -e 'xclip -selection clipboard -t image/png -i $f; rm $f'
 
+# Save whole screen capture
 super + @Print
 	cd $HOME/Pictures && scrot
 
-alt + @Print
-	scrot -u -e 'xclip -selection clipboard -t image/png -i $f'
+# Save window capture and copy it to clipboard
+alt + super + @Print
+	cd $HOME/Pictures && scrot -u -e 'xclip -selection clipboard -t image/png -i $f'
 
-shift + @Print
-	scrot -s -e 'xclip -selection clipboard -t image/png -i $f'
+# Copy window capture to clipboard/Save window capture
+{_,super + }ctrl + @Print
+	cd $HOME/Pictures && scrot -u {-e 'xclip -selection clipboard -t image/png -i $f; rm $f',_}
 
-super + shift + @s
-	scrot -s -e 'xclip -selection clipboard -t image/png -i $f'
+# Copy selection capture to clipboard/Save selection capture
+{_,super + }shift + @Print
+	cd $HOME/Pictures && scrot -f -s {-e 'xclip -selection clipboard -t image/png -i $f; rm $f',_}
