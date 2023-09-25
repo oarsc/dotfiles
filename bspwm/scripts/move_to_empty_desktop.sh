@@ -15,4 +15,5 @@ desktop="$(bspc query -D -m $monitor -d .\!occupied | head -n 1)"
 [ "$desktop" ] || exit 1
 
 bspc node -d $desktop
+bspc desktop $desktop -l tiled
 bspc desktop -f $desktop

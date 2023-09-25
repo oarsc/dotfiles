@@ -45,14 +45,14 @@ if type "xrandr"; then
   IFS=' ' read -r -a ARR_MONITORS <<< "$MONITORS"
 
   bspc wm -O $MONITORS
-  bspc monitor ${ARR_MONITORS[0]} -d I II III IV V VI
+  bspc monitor ${ARR_MONITORS[0]} -d I II III IV V VI VII VIII
 
   if [ ${ARR_MONITORS[1]} ]; then
-    bspc monitor ${ARR_MONITORS[1]} -d VII VIII IX X XI XII
+    bspc monitor ${ARR_MONITORS[1]} -d IX X XI XII XIII XIV XV XVI
   fi
 
 else
-  bspc monitor -d I II III IV V VI
+  bspc monitor -d I II III IV V VI VII VIII
 fi
 
 bspc config border_width         2

@@ -89,16 +89,21 @@ super + {_,shift + }c
 # focus the next/previous desktop in the current monitor
 super + {dead_grave,less,z,plus}
 	bspc desktop -f {prev,prev,next,next}.local;\
-	bspc desktop -l tiled
+	bspc query -D -d .\!occupied.focused -m .focused && bspc desktop -l tiled
 
 # send the next/previous desktop in the current monitor
 super + shift + {dead_grave,less,z,plus}
-	bspc node -d {prev,prev,next,next}.local --follow;\
-	bspc desktop -l tiled
+	bspc node -d {prev,prev,next,next}.local --follow
 
-# focus the last node/desktop
-super + {q,Tab}
-	bspc {node,desktop} -f last
+# focus the last node
+super + q
+	~/.config/bspwm/scripts/last_node_same_monitor.sh
+#	bspc node -f last
+
+# focus the last desktop
+super + Tab
+	bspc desktop -f last.local;\
+	bspc query -D -d .\!occupied.focused -m .focused && bspc desktop -l tiled
 
 # move to last monitor
 super + masculine
@@ -125,12 +130,11 @@ super + {o,i}
 # focus to the given desktop
 super + {1-9,0}
 	bspc desktop -f '^{1-9,10}';\
-	bspc desktop -l tiled
+	bspc query -D -d .\!occupied.focused -m .focused && bspc desktop -l tiled
 
 # send to the given desktop
 super + shift + {1-9,0}
-	bspc node -d '^{1-9,10}' --follow;\
-	bspc desktop -l tiled
+	bspc node -d '^{1-9,10}' --follow
 	
 # focus next/prev monitor
 super + {dead_acute,a,s,ccedilla}
