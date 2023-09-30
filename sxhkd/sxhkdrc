@@ -100,18 +100,15 @@ super + shift + {dead_grave,less,z,plus}
 # focus the last node
 super + q
 	~/.config/bspwm/scripts/last_node_same_monitor.sh
-#	bspc node -f last
 
 # focus the last desktop
 super + Tab
-#	bspc desktop -f last.local;\								
 	~/.config/bspwm/scripts/last_desktop_same_monitor.sh;\
 	bspc query -D -d .\!occupied.focused -m .focused && bspc desktop -l tiled
 
 # move to last monitor
 super + masculine
 	bspc monitor -f next
-#	~/.config/bspwm/scripts/move_to_last_monitor.sh
 
 super + shift + masculine
 	~/.config/bspwm/scripts/move_to_last_monitor.sh follow
