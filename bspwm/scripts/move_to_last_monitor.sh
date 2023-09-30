@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [[ $(bspc query -M | wc -l) -lt 2 ]]; then
+    echo "This action requires multiple monitors"
+    exit 1
+fi
+
 if [ "$1" = "follow" ]; then
     monitor="$(bspc query -M -m last)"
     if [ -z $monitor ]; then

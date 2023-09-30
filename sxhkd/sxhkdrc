@@ -21,7 +21,7 @@ super + shift + Return
 {super + shift + @space,alt + F2}
 	dmenu_run -b
 
-super +  @space
+super + space
 	~/.config/polybar/scripts/launcher.sh
 
 # make sxhkd reload its configuration files:
@@ -85,6 +85,8 @@ super + {p,b,comma,period}
 # focus the next/previous window in the current desktop
 super + {_,shift + }c
 	bspc node -f {next,prev}.local.!hidden.window
+alt + {_,shift + }Tab
+	bspc node -f {next,prev}.local.!hidden.window
 
 # focus the next/previous desktop in the current monitor
 super + {dead_grave,less,z,plus}
@@ -102,12 +104,13 @@ super + q
 
 # focus the last desktop
 super + Tab
-	bspc desktop -f last.local;\
+#	bspc desktop -f last.local;\								
+	~/.config/bspwm/scripts/last_desktop_same_monitor.sh;\
 	bspc query -D -d .\!occupied.focused -m .focused && bspc desktop -l tiled
 
 # move to last monitor
 super + masculine
-	bspc monitor -f last
+	bspc monitor -f next
 #	~/.config/bspwm/scripts/move_to_last_monitor.sh
 
 super + shift + masculine
@@ -117,9 +120,13 @@ super + shift + masculine
 super + ctrl + masculine
 	~/.config/bspwm/scripts/swap_monitors.sh
 
+# swap monitors
+super + alt + ctrl + masculine
+	~/.config/bspwm/scripts/swap_monitors_all.sh
+
 # move to empty desktops
 super + {_,shift + }w
-	~/.config/bspwm/scripts/move_to_empty_desktop.sh {_,last}
+	~/.config/bspwm/scripts/move_to_empty_desktop.sh {_,monitor}
 
 # focus the older or newer node in the focus history
 super + {o,i}
