@@ -15,7 +15,7 @@ SELECTED_MONITOR=$1
 
 array MONITORS "$(xrandr --query | grep " connected" | cut -d" " -f1)"
 LENGTH=${#MONITORS[@]}
-POSITIONS=( 0x0 2560x180 )
+POSITIONS=( "0x0 --rate 144" 2560x180 )
 
 if [ $LENGTH -lt $SELECTED_MONITOR ]; then
     >&2 echo "Monitor index out of range ($LENGTH)";
