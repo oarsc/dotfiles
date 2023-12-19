@@ -148,6 +148,16 @@ alias vi=nvim
 
 export EDITOR=nvim
 
+function start-ssh {
+    if ps -p $SSH_AGENT_PID > /dev/null 2>&1
+    then
+        echo "ssh-agent is already running"
+    else
+        eval `ssh-agent`;
+        ssh-add ~/.ssh/id_rsa-digitalocean;
+    fi
+}
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
