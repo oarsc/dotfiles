@@ -44,7 +44,7 @@ super + ctrl + alt + {q,r}
 
 # close and kill
 super + {shift,alt} + q
-	bspc node -{c,k}
+	bspc node -{c,k} && bspc desktop -l tiled
 
 # alternate between the tiled and monocle layout
 super + m
@@ -111,11 +111,11 @@ super + masculine
 	bspc monitor -f next
 
 super + shift + masculine
-	~/.config/bspwm/scripts/move_to_last_monitor.sh follow
+	bspc node -m last --follow || bspc node -m next --follow
 
 # swap monitors
 super + ctrl + masculine
-	~/.config/bspwm/scripts/swap_monitors.sh
+	~/.config/bspwm/scripts/swap_monitors_all.sh
 
 # swap monitors
 super + alt + ctrl + masculine
@@ -141,12 +141,12 @@ super + shift + {1-9,0}
 	bspc node -d '^{1-9,10}' --follow
 	
 # focus next/prev monitor
-super + {dead_acute,a,s,ccedilla}
-	bspc monitor -f {west,west,east,east}
+super + {dead_acute,ccedilla}
+	bspc monitor -f {west,east}
 	
 # move to next/prev monitor
-super + shift + {dead_acute,a,s,ccedilla}
-	bspc node -m {west,west,east,east} --follow
+super + shift + {dead_acute,ccedilla}
+	bspc node -m {west,east} --follow
 	
 # swap monitors
 super + ctrl + shift + {dead_acute,ccedilla}
@@ -240,3 +240,6 @@ alt + super + @Print
 # Copy selection capture to clipboard/Save selection capture
 {_,super + }shift + @Print
 	cd $HOME/Pictures && scrot -f -s {-e 'xclip -selection clipboard -t image/png -i $f; rm $f',_}
+
+super + shift + @s
+	cd $HOME/Pictures && scrot -f -s -e 'xclip -selection clipboard -t image/png -i $f; rm $f'

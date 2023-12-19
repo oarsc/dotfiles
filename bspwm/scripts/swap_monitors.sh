@@ -23,4 +23,4 @@ if [ "$focus" = "$id_1" ]; then
 else
     bspc desktop -f $id_1
 fi
-bspc desktop -f $focus
+#bspc desktop -f $focus

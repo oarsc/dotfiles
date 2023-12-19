@@ -1,16 +1,16 @@
 #!/bin/bash
 
-if [ "$1" = "monitor" ]; then
+action=$1
+
+if [ "$action" = "monitor" ]; then
 
     if [[ $(bspc query -M | wc -l) -lt 2 ]]; then
-        echo "This action requires multiple monitors"
-        exit 1
+        # only 1 monitor available
+        monitor=$(bspc query -M -m)
+        action=""
+    else
+        monitor=$(bspc query -M -m next)
     fi
-
-    monitor=$(bspc query -M -m next)
-#    if [ -z $monitor ]; then
-#        monitor=$(bspc query -M -m .\!focused | head -n 1)
-#    fi
 else
     monitor=$(bspc query -M -m)
 fi
@@ -22,4 +22,8 @@ desktop=$(bspc query -D -m $monitor -d .\!occupied | head -n 1)
 
 bspc node -d $desktop
 bspc desktop $desktop -l tiled
-bspc desktop -f $desktop
+if [ "$action" = "monitor" ]; then
+    bspc desktop -a $desktop
+else
+    bspc desktop -f $desktop
+fi
