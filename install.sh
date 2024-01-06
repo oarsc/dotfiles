@@ -59,6 +59,9 @@ rm -fr parrot-themes
 # zsh Plugins
 git clone https://github.com/rupa/z "$BASEDIR/zsh/plugins/z"
 
+# Set default terminal
+gsettings set org.cinnamon.desktop.default-applications.terminal exec kitty
+
 # Nvim instructions
 wget -O ./nvim-linux64.deb "https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb"
 sudo apt install -y xclip ./nvim-linux64.deb

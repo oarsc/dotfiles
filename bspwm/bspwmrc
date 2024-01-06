@@ -69,7 +69,7 @@ wmname LG3D &
 bspc rule -a android-studio border=off follow=on
 bspc rule -a jetbrains-studio border=off follow=on
 bspc rule -a ualth border=off
-bspc rule -a Dlancockpit border=off state=floating
+bspc rule -a Dlancockpit border=off state=tiled
 #bspc rule -a Gimp desktop='^8' state=floating follow=on
 #bspc rule -a Chromium desktop='^2'
 #bspc rule -a mplayer2 state=floating
