@@ -6,13 +6,16 @@ currentNodeHex=$(bspc query -N -n)
 currentMonitor=$(echo $currentMonitorHex | sed 's/0x//; s/^/ibase=16;/' | bc)
 currentNode=$(echo $currentNodeHex | sed 's/0x//; s/^/ibase=16;/' | bc)
 
+bspcwmd=$(bspc wm -d)
+
 while IFS= read -r nodeId; do
+
     if [ "$currentNode" != "$nodeId" ]; then
         bspc node -f $nodeId
         exit 0
     fi
 
-done <<< $(bspc wm -d | jq ".focusHistory | map(select(.nodeId != 0 and .monitorId == $currentMonitor)) | reverse | .[].nodeId")
+done <<< $(echo $bspcwmd | jq ".focusHistory | map(select(.nodeId != 0 and .monitorId == $currentMonitor)) | reverse | .[].nodeId")
 
 
 while IFS= read -r nodeId; do
@@ -24,6 +27,6 @@ while IFS= read -r nodeId; do
         exit 0
     fi
 
-done <<< $(bspc wm -d | sed -r 's/.*stackingList":\[(.*)\].*/\1/' | sed 's/,/\n/g' | tac)
+done <<< $(echo $bspcwmd | jq ".stackingList | reverse | .[]")
 
 exit 1
