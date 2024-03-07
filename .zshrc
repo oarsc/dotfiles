@@ -76,6 +76,7 @@ plugins=(
     z
 )
 
+DISABLE_UPDATE_PROMPT=true
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
