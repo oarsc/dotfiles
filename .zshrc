@@ -146,7 +146,9 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vi=nvim
+alias socks="ssh -CqND 9999 127.0.0.1"
 
+export LESS="-Xr"
 export EDITOR=nvim
 
 function start-ssh {
@@ -161,6 +163,10 @@ function start-ssh {
 
 function fix-video {
 	ffmpeg -y -i "$1" -c copy -f mp4 "-bsf:a" aac_adtstoasc "$2"
+}
+
+function process-video {
+	ffmpeg -i "$1" -c:v libx264 -c:a aac "$2"
 }
 
 export NVM_DIR="$HOME/.nvm"
