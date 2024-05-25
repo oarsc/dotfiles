@@ -38,6 +38,10 @@ super + Escape
 # bspwm hotkeys
 #
 
+# toggle polybar
+super + x
+    ~/.config/bspwm/scripts/toggle_polybar.sh
+
 # quit/restart bspwm
 super + ctrl + alt + {q,r}
 	bspc {quit,wm -r}
@@ -57,6 +61,10 @@ super + y
 # swap the current node and the biggest window
 super + g
 	bspc node -s biggest.window
+
+# rotate
+super + r
+	bspc node @parent -R 90
 
 #
 # state/flags
@@ -90,8 +98,7 @@ alt + {_,shift + }Tab
 
 # focus the next/previous desktop in the current monitor
 super + {dead_grave,less,z,plus}
-	bspc desktop -f {prev,prev,next,next}.local;\
-	bspc query -D -d .\!occupied.focused -m .focused && bspc desktop -l tiled
+	~/.config/bspwm/scripts/go_to_content_desktop.sh {prev,prev,next,next}
 
 # send the next/previous desktop in the current monitor
 super + shift + {dead_grave,less,z,plus}
@@ -103,8 +110,8 @@ super + q
 
 # focus the last desktop
 super + Tab
-	~/.config/bspwm/scripts/last_desktop_same_monitor.sh;\
-	bspc query -D -d .\!occupied.focused -m .focused && bspc desktop -l tiled
+	~/.config/bspwm/scripts/last_desktop_same_monitor.sh &&\
+	bspc query -D -d 'focused.!occupied' -m focused && bspc desktop -l tiled
 
 # move to last monitor
 super + masculine
@@ -133,12 +140,12 @@ super + {o,i}
 
 # focus to the given desktop
 super + {1-9,0}
-	bspc desktop -f '^{1-9,10}';\
-	bspc query -D -d .\!occupied.focused -m .focused && bspc desktop -l tiled
+	~/.config/bspwm/scripts/go_to_numbered_desktop.sh {1-9,10} &&\
+	bspc query -D -d 'focused.!occupied' -m focused && bspc desktop -l tiled
 
 # send to the given desktop
 super + shift + {1-9,0}
-	bspc node -d '^{1-9,10}' --follow
+	~/.config/bspwm/scripts/go_to_numbered_desktop.sh {1-9,10} move
 	
 # focus next/prev monitor
 super + {dead_acute,ccedilla}

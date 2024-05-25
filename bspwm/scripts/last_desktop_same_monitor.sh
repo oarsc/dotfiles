@@ -17,7 +17,6 @@ while IFS= read -r nodeId; do
 
 done <<< $(echo $bspcwmd | jq ".focusHistory | map(select(.nodeId != 0 and .monitorId == $currentMonitor)) | reverse | .[].nodeId")
 
-
 while IFS= read -r nodeId; do
     nodeMonitor=$(bspc query -M -n $nodeId)
     nodeDesktop=$(bspc query -D -n $nodeId)

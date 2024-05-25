@@ -23,7 +23,7 @@ for (( i=1; i<=$num_desktops; i++ )); do
     ni=$(echo $desktops_names_i | cut -d',' -f$i)
     nf=$(echo $desktops_names_f | cut -d',' -f$i)
 
-    bspc desktop $df -s $di &
+    bspc desktop $df -s $di
     #bspc desktop $df -n "$nf" -s $di
     #bspc desktop $df -n "$ni"
     #bspc desktop $di -n "$nf"
