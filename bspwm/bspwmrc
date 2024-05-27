@@ -78,3 +78,47 @@ bspc rule -a Dlancockpit border=off state=tiled
 #bspc rule -a Kupfer.py focus=on
 #bspc rule -a Screenkey manage=off
 
+
+
+function setShadow {
+  property="_COMPTON_SHADOW"
+
+  if [ "$2" = true ]; then
+    xprop -id "$1" -f $property 32c -set $property 1
+  else
+    xprop -id "$1" -remove $property
+  fi
+}
+
+function handleShadows {
+  nodes=$(bspc query -N -d "$2" -n '.tiled')
+
+  if [ "$1" = "monocle" ]; then
+    for node in $nodes; do
+      setShadow "$node" false
+    done
+  else
+    for node in $nodes; do
+      setShadow "$node" true
+    done
+  fi
+}
+
+
+bspc subscribe desktop_layout | while read -r _ _ desktopId status; do
+  handleShadows "$status" "$desktopId"
+done &
+
+bspc subscribe desktop_focus | while read -r _ _ desktopId; do
+  layout=$(bspc query -T -d $desktopId | jq -r '.layout')
+  handleShadows "$layout" "$desktopId"
+done &
+
+bspc subscribe node_state | while read -r _ _ _ node state status; do
+  if [[ "$state" == "floating" ]]; then
+    case "$status" in
+      off) setShadow "$node" false;;
+      on) setShadow "$node" true;;
+    esac
+  fi
+done &
