@@ -29,4 +29,7 @@ while IFS= read -r nodeId; do
 
 done <<< $(echo $bspcwmd | jq ".stackingList | reverse | .[]")
 
+current_dir=$(dirname "$0")
+"$current_dir/ping_small_polybar.sh"
+
 exit 1

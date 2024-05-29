@@ -17,8 +17,15 @@ if type "xrandr"; then
   IFS=' ' read -r -a ARR_MONITORS <<< "$MONITORS"
 
   MONITOR=${ARR_MONITORS[0]} polybar -q main -c "$DIR"/config.ini &
+
+  MONITOR=${ARR_MONITORS[0]} polybar -q small -c "$DIR/config.ini" &
+    (xdo id -m -N Polybar && polybar-msg -p $! cmd hide) &
+
   if [ ${ARR_MONITORS[1]} ]; then
     MONITOR=${ARR_MONITORS[1]} polybar -q main-alt -c "$DIR"/config.ini &
+
+    MONITOR=${ARR_MONITORS[1]} polybar -q small-alt -c "$DIR/config.ini" &
+      (xdo id -m -N Polybar && polybar-msg -p $! cmd hide) &
   fi
 
 else

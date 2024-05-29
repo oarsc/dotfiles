@@ -60,8 +60,6 @@ fi
 bspc config border_width         2
 bspc config window_gap           10
 
-
-
 bspc config split_ratio          0.5
 bspc config single_monocle       true
 bspc config borderless_monocle   true
@@ -105,6 +103,12 @@ function handleShadows {
 }
 
 
+#  █▄▄ █▀ █▀█ █ █ █ █▀▄▀█   █▀ █ █ █▄▄ █▀ █▀▀ █▀█ █ █▀█ ▀█▀ █ █▀█ █▄ █ █▀
+#  █▄█ ▄█ █▀▀ ▀▄▀▄▀ █ ▀ █   ▄█ █▄█ █▄█ ▄█ █▄▄ █▀▄ █ █▀▀  █  █ █▄█ █ ▀█ ▄█
+# ------------------------------------------------------------------------
+
+pkill -f "bspc subscribe"
+
 bspc subscribe desktop_layout | while read -r _ _ desktopId status; do
   handleShadows "$status" "$desktopId"
 done &
@@ -112,6 +116,21 @@ done &
 bspc subscribe desktop_focus | while read -r _ _ desktopId; do
   layout=$(bspc query -T -d $desktopId | jq -r '.layout')
   handleShadows "$layout" "$desktopId"
+
+
+  num_monitors=$(bspc query -M | wc -l)
+
+  if [ $num_monitors -gt 1 ]; then
+    bspc query -M -m primary.focused
+    if [ $? -eq 0 ]; then
+      $BASEDIR/scripts/ping_small_polybar.sh main &
+    else
+      $BASEDIR/scripts/ping_small_polybar.sh alt &
+    fi
+  else
+    $BASEDIR/scripts/ping_small_polybar.sh main &
+  fi
+
 done &
 
 bspc subscribe node_state | while read -r _ _ _ node state status; do
@@ -122,3 +141,10 @@ bspc subscribe node_state | while read -r _ _ _ node state status; do
     esac
   fi
 done &
+
+
+#  █▀█ ▀█▀ █ █ █▀▀ █▀█   █▀▀ █▀█ █▄ █ █▀▀ █ █▀▀ █ █ █▀█ ▄▀█ ▀█▀ █ █▀█ █▄ █ █▀
+#  █▄█  █  █▀█ ██▄ █▀▄   █▄▄ █▄█ █ ▀█ █▀  █ █▄█ █▄█ █▀▄ █▀█  █  █ █▄█ █ ▀█ ▄█
+# ----------------------------------------------------------------------------
+
+rm "$HOME/.polybar-hidden"
