@@ -117,18 +117,18 @@ bspc subscribe desktop_focus | while read -r _ _ desktopId; do
   layout=$(bspc query -T -d $desktopId | jq -r '.layout')
   handleShadows "$layout" "$desktopId"
 
+  bspc query -D -d 'focused.!occupied' -m focused && bspc desktop -l tiled
 
   num_monitors=$(bspc query -M | wc -l)
-
   if [ $num_monitors -gt 1 ]; then
     bspc query -M -m primary.focused
     if [ $? -eq 0 ]; then
-      $BASEDIR/scripts/ping_small_polybar.sh main &
+      $BASEDIR/scripts/polybar_ping_small.sh main &
     else
-      $BASEDIR/scripts/ping_small_polybar.sh alt &
+      $BASEDIR/scripts/polybar_ping_small.sh alt &
     fi
   else
-    $BASEDIR/scripts/ping_small_polybar.sh main &
+    $BASEDIR/scripts/polybar_ping_small.sh main &
   fi
 
 done &

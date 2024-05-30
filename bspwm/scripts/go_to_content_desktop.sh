@@ -23,6 +23,6 @@ while IFS= read -r next_desktop; do
 done <<< "$next_desktops"
 
 current_dir=$(dirname "$0")
-"$current_dir/ping_small_polybar.sh"
+"$current_dir/polybar_ping_small.sh"
 
 exit 1

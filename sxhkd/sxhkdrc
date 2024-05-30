@@ -40,7 +40,7 @@ super + Escape
 
 # toggle polybar
 super + x
-    ~/.config/bspwm/scripts/toggle_polybar.sh
+    ~/.config/bspwm/scripts/polybar_toggle.sh
 
 # quit/restart bspwm
 super + ctrl + alt + {q,r}
@@ -110,15 +110,14 @@ super + q
 
 # focus the last desktop
 super + Tab
-	~/.config/bspwm/scripts/last_desktop_same_monitor.sh &&\
-	bspc query -D -d 'focused.!occupied' -m focused && bspc desktop -l tiled
+	~/.config/bspwm/scripts/last_desktop_same_monitor.sh
 
 # move to last monitor
 super + masculine
 	bspc monitor -f next
 
 super + shift + masculine
-	bspc node -m last --follow || bspc node -m next --follow
+	~/.config/bspwm/scripts/move_to_other_monitor.sh
 
 # swap monitors
 super + ctrl + masculine
@@ -140,8 +139,7 @@ super + {o,i}
 
 # focus to the given desktop
 super + {1-9,0}
-	~/.config/bspwm/scripts/go_to_numbered_desktop.sh {1-9,10} &&\
-	bspc query -D -d 'focused.!occupied' -m focused && bspc desktop -l tiled
+	~/.config/bspwm/scripts/go_to_numbered_desktop.sh {1-9,10}
 
 # send to the given desktop
 super + shift + {1-9,0}

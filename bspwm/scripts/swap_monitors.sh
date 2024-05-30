@@ -5,6 +5,12 @@ if [[ $(bspc query -M | wc -l) -lt 2 ]]; then
     exit 1
 fi
 
+pids=$(pgrep -f "$(basename "$0")")
+if [ "$(echo "$pids" | wc -w)" -gt 1 ]; then
+    kill $pids
+    exit 0
+fi
+
 id_1=$(bspc query -D -d '^1:focused')
 id_2=$(bspc query -D -d '^2:focused')
 
@@ -24,3 +30,7 @@ else
     bspc desktop -f $id_1
 fi
 #bspc desktop -f $focus
+
+trap "bspc monitor -f next" SIGTERM
+
+sleep 2 & wait
