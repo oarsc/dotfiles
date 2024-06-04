@@ -151,21 +151,23 @@ alias socks="ssh -CqND 9999 127.0.0.1"
 export LESS="-Xr"
 export EDITOR=nvim
 
-function start-ssh {
-    if ps -p $SSH_AGENT_PID > /dev/null 2>&1
-    then
-        echo "ssh-agent is already running"
-    else
-        eval `ssh-agent`;
-        ssh-add ~/.ssh/id_rsa-digitalocean;
+ssh() {
+    if [ -z "$SSH_AGENT_PID" ]; then
+        keys=$(find ~/.ssh -type f -name "id_*" ! -name "*.pub" 2>/dev/null)
+
+        if [ -n "$keys" ]; then
+            eval $(keychain --quiet --eval --agents ssh $keys)
+        fi
     fi
+
+    command ssh "$@"
 }
 
-function fix-video {
+fix-video() {
 	ffmpeg -y -i "$1" -c copy -f mp4 "-bsf:a" aac_adtstoasc "$2"
 }
 
-function process-video {
+process-video() {
 	ffmpeg -i "$1" -c:v libx264 -c:a aac "$2"
 }
 
