@@ -1,14 +1,15 @@
 /* Confirm Dialog */
 
 @import "colors.rasi"
+@import "fonts.rasi"
 
 * {
     background-color:       @bg;
     text-color:             @fg;
-	font:				 	"Fantasque Sans Mono 10";
 }
 
 window {
+    font:				 	@font;
     width:      			225px;
     padding:    			25px;
     border:					1px;

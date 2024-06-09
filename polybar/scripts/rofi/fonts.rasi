@@ -1,0 +1,5 @@
+/* fonts */
+
+* {
+    font: "BlexMono Nerd Font Propo 10";
+}

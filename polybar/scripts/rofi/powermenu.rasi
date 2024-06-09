@@ -8,7 +8,6 @@
  */
 
 configuration {
-	font:							"Fantasque Sans Mono 10";
     show-icons:                     true;
 	icon-theme: 					"Papirus";
     display-drun: 					"";
@@ -20,6 +19,7 @@ configuration {
 }
 
 @import "colors.rasi"
+@import "fonts.rasi"
 
 window {
     transparency:                   "real";
@@ -39,12 +39,12 @@ prompt {
 	padding: 						10px 15px 10px 15px;
 	background-color: 				@bg2;
 	text-color: 					#FFFFFF;
-	font:							"Iosevka Nerd Font 10";
+	font:							@font;
 }
 
 textbox-prompt-colon {
 	padding: 						10px 15px 10px 15px;
-	font:							"Iosevka Nerd Font 10";
+	font:							@font;
 	background-color: 				@bg1;
 	text-color: 					#FFFFFF;
 	expand: false;

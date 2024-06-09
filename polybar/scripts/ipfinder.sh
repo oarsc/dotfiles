@@ -10,8 +10,8 @@ DEFAULT_CHECK_ANYWAY=10 # seconds
 check_anyway=$DEFAULT_CHECK_ANYWAY # seconds
 
 # Icons
-CONNECTED=""
-INTERNET_DOWN=""
+CONNECTED="󰇧"
+INTERNET_DOWN="󰇨"
 
 # In case we get throttled anyway, try with a different service.
 throttled() {
