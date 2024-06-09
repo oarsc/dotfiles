@@ -9,19 +9,10 @@ currentNode=$(echo $currentNodeHex | sed 's/0x//; s/^/ibase=16;/' | bc)
 
 bspcwmd=$(bspc wm -d)
 
-function swapNode {
-    bspc node -f $1
-
-    if [ "$(bspc query -D -n $1)" == "$currentDesktopHex" ]; then
-        current_dir=$(dirname "$0")
-        "$current_dir/polybar_ping_small.sh"
-    fi
-}
-
 while IFS= read -r nodeId; do
 
     if [ "$currentNode" != "$nodeId" ]; then
-        swapNode $nodeId
+        bspc node -f $nodeId
         exit 0
     fi
 
@@ -33,13 +24,10 @@ while IFS= read -r nodeId; do
     nodeIdHex=$(bspc query -N -n $nodeId)
 
     if [ "$nodeMonitorHex" = "$currentMonitorHex" ] && [ "$currentNodeHex" != "$nodeIdHex" ]; then
-        swapNode $nodeIdHex
+        bspc node -f $nodeIdHex
         exit 0
     fi
 
 done <<< $(echo $bspcwmd | jq ".stackingList | reverse | .[]")
-
-current_dir=$(dirname "$0")
-"$current_dir/polybar_ping_small.sh"
 
 exit 1
