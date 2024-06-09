@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 CURRENT=$(pactl info | grep "Default Sink: " | sed "s/Default Sink\: //")
 
 found=false

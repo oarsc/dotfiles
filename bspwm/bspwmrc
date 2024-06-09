@@ -111,6 +111,8 @@ pkill -f "bspc subscribe"
 
 bspc subscribe desktop_layout | while read -r _ _ desktopId status; do
   handleShadows "$status" "$desktopId"
+
+  $HOME/.config/polybar/scripts/check-monocles.sh &
 done &
 
 bspc subscribe desktop_focus | while read -r _ _ desktopId; do
@@ -118,6 +120,7 @@ bspc subscribe desktop_focus | while read -r _ _ desktopId; do
   handleShadows "$layout" "$desktopId"
 
   bspc query -D -d 'focused.!occupied' -m focused && bspc desktop -l tiled
+  $HOME/.config/polybar/scripts/check-monocles.sh &
 done &
 
 bspc subscribe node_state | while read -r _ _ _ node state status; do
@@ -128,10 +131,3 @@ bspc subscribe node_state | while read -r _ _ _ node state status; do
     esac
   fi
 done &
-
-
-#  █▀█ ▀█▀ █ █ █▀▀ █▀█   █▀▀ █▀█ █▄ █ █▀▀ █ █▀▀ █ █ █▀█ ▄▀█ ▀█▀ █ █▀█ █▄ █ █▀
-#  █▄█  █  █▀█ ██▄ █▀▄   █▄▄ █▄█ █ ▀█ █▀  █ █▄█ █▄█ █▀▄ █▀█  █  █ █▄█ █ ▀█ ▄█
-# ----------------------------------------------------------------------------
-
-rm "$HOME/.polybar-hidden"
