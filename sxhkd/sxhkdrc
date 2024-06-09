@@ -97,12 +97,12 @@ alt + {_,shift + }Tab
 	bspc node -f {next,prev}.local.!hidden.window
 
 # focus the next/previous desktop in the current monitor
-super + {dead_grave,less,z,plus}
-	~/.config/bspwm/scripts/go_to_content_desktop.sh {prev,prev,next,next}
+super + {dead_grave,less,a,z,plus,s}
+	bspc desktop -f {prev,prev,prev,next,next,next}.local
 
 # send the next/previous desktop in the current monitor
-super + shift + {dead_grave,less,z,plus}
-	bspc node -d {prev,prev,next,next}.local --follow
+super + shift + {dead_grave,less,a,z,plus,s}
+	bspc node -d {prev,prev,prev,next,next,next}.local --follow
 
 # focus the last node
 super + q
@@ -245,6 +245,3 @@ alt + super + @Print
 # Copy selection capture to clipboard/Save selection capture
 {_,super + }shift + @Print
 	cd $HOME/Pictures && scrot -f -s {-e 'xclip -selection clipboard -t image/png -i $f; rm $f',_}
-
-super + shift + @s
-	cd $HOME/Pictures && scrot -f -s -e 'xclip -selection clipboard -t image/png -i $f; rm $f'
