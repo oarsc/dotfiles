@@ -171,6 +171,17 @@ process-video() {
 	ffmpeg -i "$1" -c:v libx264 -c:a aac "$2"
 }
 
+ubuntu() {
+    local version=$(lsb_release -r | awk '{print $2}')
+    docker run \
+        --network=host \
+        -v /etc/passwd:/etc/passwd:ro \
+        -v /etc/group:/etc/group:ro \
+        -v $HOME:$HOME \
+        -v $PWD:/dir \
+        -itw /dir --rm --user $UID:$GID ubuntu:$version
+}
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
