@@ -34,8 +34,8 @@ fi
 
 
 for pid in "${pids[@]}"; do
-  xdo id -m -P $pid
+  xdo id -m -p $pid
 done
-sleep 0.01
+sleep 0.1
 
 $DIR/scripts/on-start.sh "${#ARR_MONITORS[@]}" "${pids[@]}"
