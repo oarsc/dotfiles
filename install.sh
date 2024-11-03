@@ -3,7 +3,7 @@
 BASEDIR=$(dirname "$0")
 CONFIGDIR="$HOME/.config"
 
-sudo apt install -y bspwm sxhkd feh kitty dmenu polybar picom rofi xsecurelock scrot dunst jq keychain
+sudo apt install -y bspwm zsh sxhkd feh kitty dmenu polybar picom rofi xsecurelock scrot dunst jq keychain lm-sensors curl zsh pulseaudio pulseaudio-utils
 
 mkdir -p "$CONFIGDIR/gtk-3.0"
 rm -fr "$CONFIGDIR/bspwm" "$CONFIGDIR/sxhkd" "$CONFIGDIR/polybar" \
@@ -15,7 +15,7 @@ ln -s "$BASEDIR/sxhkd"                "$CONFIGDIR/sxhkd"
 ln -s "$BASEDIR/polybar"              "$CONFIGDIR/polybar"
 ln -s "$BASEDIR/kitty"                "$CONFIGDIR/kitty"
 ln -s "$BASEDIR/picom"                "$CONFIGDIR/picom"
-ln -s "$BASEDIR/gtk-3.0/settings.ini" "$CONFIGDIR/gtk-3.0/settings.ini"
+ln -s "$BASEDIR/gtk-3.0/settings.ini" "$CONFIGDIR/gtk-4.0/settings.ini"
 ln -s "$BASEDIR/zsh"                  "$CONFIGDIR/zsh"
 ln -s "$BASEDIR/dunst"                "$CONFIGDIR/dunst"
 ln -s "$BASEDIR/.zshrc"               "$HOME/.zshrc"
@@ -36,7 +36,7 @@ rm -fr networkmanager-dmenu
 
 # Install fonts
 mkdir -p "$HOME/.local/share/fonts"
-cp -rf "$BASEDIR/fonts/*" "$HOME/.local/share/fonts"
+cp -rf $BASEDIR/fonts/* "$HOME/.local/share/fonts"
 
 # Install cursor
 sudo apt install breeze-cursor-theme
@@ -60,14 +60,13 @@ rm -fr parrot-themes
 git clone https://github.com/rupa/z "$BASEDIR/zsh/plugins/z"
 
 # Set default terminal
-gsettings set org.cinnamon.desktop.default-applications.terminal exec kitty
+gsettings set org.gnome.desktop.default-applications.terminal exec 'kitty'
 
-# Nvim instructions
-wget -O ./nvim-linux64.deb "https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb"
-sudo apt install -y xclip ./nvim-linux64.deb
-rm ./nvim-linux64.deb
+# Oh my ZSH
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-git clone https://github.com/AstroNvim/AstroNvim ~/.config/nvim
+# Nvim
+sudo apt install -y xclip neovim
 
-echo "- Please run \"nvim +PackerSync\" in order to finish configurating Astrovim"
-echo "- If executing \"nvim ~/.nvimrc\" shows an error, execute \":TSInstall vim\" to solve it"
+git clone --depth 1 https://github.com/AstroNvim/template ~/.config/nvim
+rm -rf ~/.config/nvim/.git

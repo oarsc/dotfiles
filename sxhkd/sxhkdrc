@@ -15,7 +15,7 @@ super + shift + Return
 
 # file browser
 {super + shift + n,super + e}
-	nemo
+	nautilus
 
 # program launcher
 {super + shift + @space,alt + F2}
@@ -200,26 +200,26 @@ super + {Left,Down,Up,Right}
 #
 
 super + {_,shift +}KP_Add
-	pactl set-sink-volume $(pactl get-default-sink) {+5%,+20%}
+	amixer set Master {5%,20%}+
 
 super + {_,shift +}KP_Subtract
-	pactl set-sink-volume $(pactl get-default-sink) {-5%,-20%}
+	amixer set Master {5%,20%}-
 
 super + KP_Multiply
-	pactl set-sink-mute $(pactl get-default-sink) toggle
+	amixer set Master toggle
 
 super + shift + KP_Multiply
 	~/.config/bspwm/scripts/sound_switch.sh
 
 # media keys
 XF86AudioRaiseVolume
-    pactl set-sink-volume $(pactl get-default-sink) +5%
+    amixer set Master 5%+
 
 XF86AudioLowerVolume
-    pactl set-sink-volume $(pactl get-default-sink) -5%
+    amixer set Master 5%-
 
 XF86AudioMute
-    pactl set-sink-mute $(pactl get-default-sink) toggle
+    amixer set Master toggle
 
 
 #
