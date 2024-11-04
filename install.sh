@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASEDIR=$(dirname "$0")
+BASEDIR=$(dirname $(readlink -e $0))
 CONFIGDIR="$HOME/.config"
 
 sudo apt install -y bspwm zsh sxhkd feh kitty dmenu polybar picom rofi xsecurelock scrot dunst jq keychain lm-sensors curl zsh pulseaudio pulseaudio-utils
@@ -22,39 +22,12 @@ ln -s "$BASEDIR/.zshrc"               "$HOME/.zshrc"
 ln -s "$BASEDIR/.xprofile"            "$HOME/.xprofile"
 
 
-# Install networkmanager-dmenu
-sudo apt install -y libnm-dev
-mkdir "$HOME/.local/bin"
-git clone https://github.com/firecat53/networkmanager-dmenu.git --depth 1
-cd networkmanager-dmenu
-mkdir -p "$HOME/.local/bin"
-mkdir -p "$HOME/.local/share/applications"
-cp networkmanager_dmenu "$HOME/.local/bin"
-cp networkmanager_dmenu.desktop "$HOME/.local/share/applications/"
-cd ..
-rm -fr networkmanager-dmenu
-
 # Install fonts
 mkdir -p "$HOME/.local/share/fonts"
 cp -rf $BASEDIR/fonts/* "$HOME/.local/share/fonts"
 
 # Install cursor
 sudo apt install breeze-cursor-theme
-
-# Install icons
-git clone https://github.com/vinceliuice/Tela-icon-theme.git --depth 1
-cd Tela-icon-theme
-./install.sh -a
-cd ..
-rm -fr Tela-icon-theme
-
-# Install Themes
-git clone https://github.com/ParrotSec/parrot-themes.git --depth 1
-cd parrot-themes
-mkdir -p "$HOME/.themes"
-mv themes/* "$HOME/.themes"
-cd ..
-rm -fr parrot-themes
 
 # zsh Plugins
 git clone https://github.com/rupa/z "$BASEDIR/zsh/plugins/z"

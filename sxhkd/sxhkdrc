@@ -200,26 +200,26 @@ super + {Left,Down,Up,Right}
 #
 
 super + {_,shift +}KP_Add
-	amixer set Master {5%,20%}+
+	pactl set-sink-volume $(pactl get-default-sink) {+5%,+20%}
 
 super + {_,shift +}KP_Subtract
-	amixer set Master {5%,20%}-
+	pactl set-sink-volume $(pactl get-default-sink) {-5%,-20%}
 
 super + KP_Multiply
-	amixer set Master toggle
+	pactl set-sink-mute $(pactl get-default-sink) toggle
 
 super + shift + KP_Multiply
 	~/.config/bspwm/scripts/sound_switch.sh
 
 # media keys
 XF86AudioRaiseVolume
-    amixer set Master 5%+
+    pactl set-sink-volume $(pactl get-default-sink) +5%
 
 XF86AudioLowerVolume
-    amixer set Master 5%-
+    pactl set-sink-volume $(pactl get-default-sink) -5%
 
 XF86AudioMute
-    amixer set Master toggle
+    pactl set-sink-mute $(pactl get-default-sink) toggle
 
 
 #
