@@ -20,6 +20,7 @@ BASEDIR=$(dirname "$0")
 # Keyboard configurations
 xset r rate 250 40
 ibus-daemon -drx
+numlockx on
 
 # Mouse configurations
 xinput set-prop 'Logitech G502 HERO SE' 'libinput Accel Speed' 1

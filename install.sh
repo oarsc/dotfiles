@@ -3,7 +3,7 @@
 BASEDIR=$(dirname $(readlink -e $0))
 CONFIGDIR="$HOME/.config"
 
-sudo apt install -y bspwm zsh sxhkd feh kitty dmenu polybar picom rofi xsecurelock scrot dunst jq keychain lm-sensors curl zsh pulseaudio pulseaudio-utils
+sudo apt install -y bspwm zsh sxhkd feh kitty dmenu polybar picom rofi xsecurelock scrot dunst jq keychain lm-sensors curl zsh pulseaudio pulseaudio-utils numlockx
 
 mkdir -p "$CONFIGDIR/gtk-3.0"
 rm -fr "$CONFIGDIR/bspwm" "$CONFIGDIR/sxhkd" "$CONFIGDIR/polybar" \
