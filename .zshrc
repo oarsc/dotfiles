@@ -163,12 +163,16 @@ ssh() {
     command ssh "$@"
 }
 
-fix-video() {
-	ffmpeg -y -i "$1" -c copy -f mp4 "-bsf:a" aac_adtstoasc "$2"
+ffmpeg-fix() {
+    ffmpeg -y -i "$1" -c copy -f mp4 "-bsf:a" aac_adtstoasc "$2"
 }
 
-process-video() {
-	ffmpeg -i "$1" -c:v libx264 -c:a aac "$2"
+ffmpeg-fix-icon() {
+    ffmpeg -f mpegts -y -i "$1" -c copy -bsf:a aac_adtstoasc "$2"
+}
+
+ffmpeg-process-video() {
+    ffmpeg -i "$1" -c:v libx264 -c:a aac "$2"
 }
 
 ubuntu() {
