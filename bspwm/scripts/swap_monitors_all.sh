@@ -1,43 +1,44 @@
 #!/bin/bash
 
 if [[ $(bspc query -M | wc -l) -lt 2 ]]; then
+    notify-send "This action requires multiple monitors"
     echo "This action requires multiple monitors"
     exit 1
 fi
 
-pids=$(pgrep -f "$(basename "$0")")
-if [ "$(echo "$pids" | wc -w)" -gt 1 ]; then
-    kill $pids
-    exit 0
-fi
+source "$(dirname "$(realpath "$0")")/xtapper.sh"
 
-num_desktops=$(bspc query -D -m focused | wc -l)
+function execution {
+    num_desktops=$(bspc query -D -m focused | wc -l)
 
-desktops_i=$(bspc query -D -m focused | tr '\n' ',')
-desktops_f=$(bspc query -D -m next | tr '\n' ',')
+    desktops_i=$(bspc query -D -m focused | tr '\n' ',')
+    desktops_f=$(bspc query -D -m next | tr '\n' ',')
 
-desktops_names_i=$(bspc query -D -m focused --names | tr '\n' ',')
-desktops_names_f=$(bspc query -D -m next --names | tr '\n' ',')
+    desktops_names_i=$(bspc query -D -m focused --names | tr '\n' ',')
+    desktops_names_f=$(bspc query -D -m next --names | tr '\n' ',')
 
-focus_i=$(bspc query -D -d focused:focused)
-focus_f=$(bspc query -D -d next:focused)
+    focus_i=$(bspc query -D -d focused:focused)
+    focus_f=$(bspc query -D -d next:focused)
 
-for (( i=1; i<=$num_desktops; i++ )); do
-    di=$(echo $desktops_i | cut -d',' -f$i)
-    df=$(echo $desktops_f | cut -d',' -f$i)
+    for (( i=1; i<=$num_desktops; i++ )); do
+        di=$(echo $desktops_i | cut -d',' -f$i)
+        df=$(echo $desktops_f | cut -d',' -f$i)
 
-    ni=$(echo $desktops_names_i | cut -d',' -f$i)
-    nf=$(echo $desktops_names_f | cut -d',' -f$i)
+        ni=$(echo $desktops_names_i | cut -d',' -f$i)
+        nf=$(echo $desktops_names_f | cut -d',' -f$i)
 
-    bspc desktop $df -s $di
-    #bspc desktop $df -n "$nf" -s $di
-    #bspc desktop $df -n "$ni"
-    #bspc desktop $di -n "$nf"
-done
+        bspc desktop $df -s $di
+        #bspc desktop $df -n "$nf" -s $di
+        #bspc desktop $df -n "$ni"
+        #bspc desktop $di -n "$nf"
+    done
 
-bspc desktop -f $focus_i
-bspc desktop -f $focus_f
+    bspc desktop -f $focus_i
+    bspc desktop -f $focus_f
+}
 
-trap "bspc monitor -f next" SIGTERM
+function next {
+    bspc monitor -f next
+}
 
-sleep 2 & wait
+xTapper "$0 $@" execution 2 next

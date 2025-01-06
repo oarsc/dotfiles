@@ -1,13 +1,10 @@
 #!/bin/bash
 
+source "$(dirname "$(realpath "$0")")/xtapper.sh"
+
 action=$1
 
-pids=$(pgrep -f "$(basename "$0")")
-if [ "$(echo "$pids" | wc -w)" -gt 1 ]; then
-    kill $pids
-fi
-
-process() {
+function execution {
     if [ "$action" = "monitor" ]; then
         if [[ $(bspc query -M | wc -l) -lt 2 ]]; then
             # only 1 monitor available
@@ -28,21 +25,20 @@ process() {
     bspc node -d $desktop
     bspc desktop $desktop -l tiled
 
-    if [ "$action" = "monitor" ]; then
-        bspc desktop -a $desktop
+    [ "$action" = "monitor" ] && bspc desktop -a $desktop
 
-        sigtermFunct() {
-            # If the monitor where we wanted to move is the one focused now, then reexecute the code.
-            # Switch to the other monitor otherwise.
-            # TODO: Fix this logic if more than 2 monitors...
-            bspc query -M -m $monitor.focused && process || bspc monitor -f $monitor
-        }
-        trap 'sigtermFunct' SIGTERM
-    else
-        trap "bspc desktop -f $desktop" SIGTERM
-    fi
-
-    sleep 2 & wait
+    echo "$monitor $desktop"
 }
 
-process
+function next {
+    if [ "$action" = "monitor" ]; then
+        # If the monitor where we wanted to move is the one focused now, then reexecute the code.
+        # Switch to the other monitor otherwise.
+        # TODO: Fix this logic if more than 2 monitors...
+        bspc query -M -m $1.focused && process || bspc monitor -f $1
+    else
+        bspc desktop -f $2
+    fi
+}
+
+xTapper "$0 $@" execution 2 next
