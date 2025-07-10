@@ -1,0 +1,59 @@
+[
+  {
+    "name": "Tobin Tax",
+    "mode": "BUY",
+    "calculation": {
+      "formula": "$v * 0.002"
+    }
+  },
+  {
+    "name": "Broker",
+    "mode": "BOTH",
+    "calculation": {
+      "condition": "$v < 50000",
+      "conditionMet": {
+        "formula": "min(20, $v * 0.001 + 3)"
+      },
+      "conditionFailed": {
+        "formula": "$v * 0.001 + 3"
+      }
+    }
+  },
+  {
+    "name": "State",
+    "mode": "GAIN",
+    "calculation": {
+      "condition": "$v > 0",
+      "conditionMet": {
+        "formula": "0"
+      },
+      "conditionFailed": {
+        "condition": "$v <= 6000",
+        "conditionMet": {
+          "formula": "$v * 0.19"
+        },
+        "conditionFailed": {
+          "condition": "$v <= 50000",
+          "conditionMet": {
+            "formula": "1140 + ($v - 6000) * 0.21"
+          },
+          "conditionFailed": {
+            "condition": "$v <= 200000",
+            "conditionMet": {
+              "formula": "10380 + ($v - 50000) * 0.23"
+            },
+            "conditionFailed": {
+              "condition": "$v <= 300000",
+              "conditionMet": {
+                "formula": "44880 + ($v - 200000) * 0.27"
+              },
+              "conditionFailed": {
+                "formula": "71880 + ($v - 300000) * 0.28"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+]

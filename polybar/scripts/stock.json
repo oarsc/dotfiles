@@ -1,0 +1,20 @@
+[
+  {
+    "enabled": true,
+    "name": "S&P-500",
+    "currency": "$",
+    "sources": [
+      {
+        "type": "YAHOO",
+        "yahooId": "^GSPC",
+        "autoDisable": true,
+        "showingFields": []
+      },
+      {
+        "type": "INVESTING",
+        "investingId": 166,
+        "showingFields": ["DIFF_PERCENT"]
+      }
+    ]
+  }
+]
