@@ -39,7 +39,7 @@ if type "xrandr"; then
             xrandr --output ${MONITORS[$i]} --mode ${RESOLUTIONS[$i]} --pos ${POSITIONS[$i]} --rotate normal
         done
 
-        ~/.config/bspwm/bspwmrc
+        $HOME/.config/bspwm/startup/bspwm-screen-startup
 
         monitorDesktops=($(bspc wm -d | jq -r '.monitors[].desktops | map(.id) | tostring | "" + . + ""'))
         selectedMonitorDesktops=($(echo ${monitorDesktops[$INDEX]} | jq '.[]'))
@@ -67,7 +67,8 @@ if type "xrandr"; then
         xrandr --output $MONITOR --mode $RESOLUTION --pos 0x0 --rotate normal
     fi
 
-    ~/.config/bspwm/bspwmrc
+    $HOME/.config/bspwm/startup/polybar-startup &
+    $HOME/.config/bspwm/startup/bspwm-screen-startup &
 
 else
     >&2 echo "xrandr not found"

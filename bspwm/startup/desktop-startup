@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#  █▀▄ █▀▀ █▀ █▄▀ ▀█▀ █▀█ █▀█   █▀▀ █▀█ █▄ █ █▀▀ █ █▀▀
+#  █▄▀ ██▄ ▄█ █ █  █  █▄█ █▀▀   █▄▄ █▄█ █ ▀█ █▀  █ █▄█
+# -----------------------------------------------------
+
+# Keyboard configurations
+xset r rate 250 40
+ibus-daemon -drx
+numlockx on
+
+# Mouse configurations
+xinput set-prop 'Logitech G502 HERO SE' 'libinput Accel Speed' 1
+xsetroot -cursor_name left_ptr
+
+# Monitor configurations
+xset s 3600
+xset -dpms
+
+# Wallpaper
+feh --bg-fill "$HOME/.config/bspwm/wallpaper.jpg" --image-bg "#050505"
+
+# Sound device
+pactl set-default-sink 'alsa_output.pci-0000_00_1f.3.analog-stereo'
+
+# Initialization
+pgrep -x sxhkd > /dev/null || sxhkd -m 1 &

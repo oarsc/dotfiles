@@ -1,0 +1,101 @@
+#!/bin/bash
+
+#  █▄▄ █▀ █▀█ █ █ █ █▀▄▀█   █▀▀ █▀█ █▄ █ █▀▀ █ █▀▀ █ █ █▀█ ▄▀█ ▀█▀ █ █▀█ █▄ █
+#  █▄█ ▄█ █▀▀ ▀▄▀▄▀ █ ▀ █   █▄▄ █▄█ █ ▀█ █▀  █ █▄█ █▄█ █▀▄ █▀█  █  █ █▄█ █ ▀█
+# ----------------------------------------------------------------------------
+
+bspc config active_border_color "#555555"
+bspc config focused_border_color "#AB47BC"
+bspc config border_width         2
+bspc config border_width         2
+bspc config window_gap           10
+
+bspc config split_ratio          0.5
+bspc config single_monocle       true
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
+wmname LG3D &
+bspc rule -a android-studio border=off follow=on
+bspc rule -a jetbrains-studio border=off follow=on
+bspc rule -a ualth border=off state=floating
+bspc rule -a "org.oar.ualkt.UalktApp" border=off state=floating
+bspc rule -a Dlancockpit border=off state=tiled
+#bspc rule -a Gimp desktop='^8' state=floating follow=on
+#bspc rule -a Chromium desktop='^2'
+#bspc rule -a mplayer2 state=floating
+#bspc rule -a Kupfer.py focus=on
+#bspc rule -a Screenkey manage=off
+
+
+#  █▀ █ █ █▄▄ █▀ █▀▀ █▀█ █ █▀█ ▀█▀ █ █▀█ █▄ █ █▀
+#  ▄█ █▄█ █▄█ ▄█ █▄▄ █▀▄ █ █▀▀  █  █ █▄█ █ ▀█ ▄█
+# -----------------------------------------------
+
+function setShadow {
+  property="_COMPTON_SHADOW"
+
+  if [ "$2" = true ]; then
+    xprop -id "$1" -f $property 32c -set $property 1
+  else
+    xprop -id "$1" -remove $property
+  fi
+}
+
+function handleShadows {
+  nodes=$(bspc query -N -d "$2" -n '.tiled')
+
+  if [ "$1" = "monocle" ]; then
+    for node in $nodes; do
+      setShadow "$node" false
+    done
+  else
+    for node in $nodes; do
+      setShadow "$node" true
+    done
+  fi
+}
+
+function removeMonocleIfSingleNode {
+  node_count=$(bspc query -N -d "$1" | wc -l)
+
+  if [ "$node_count" -le 1 ]; then
+    bspc desktop -l tiled
+  fi
+
+  $HOME/.config/polybar/scripts/check-monocles.sh &
+}
+
+pkill -f "bspc subscribe"
+
+bspc subscribe desktop_layout | while read -r _ _ desktopId status; do
+  handleShadows "$status" "$desktopId"
+
+  $HOME/.config/polybar/scripts/check-monocles.sh &
+done &
+
+bspc subscribe desktop_focus | while read -r _ _ desktopId; do
+  layout=$(bspc query -T -d $desktopId | jq -r '.layout')
+  handleShadows "$layout" "$desktopId"
+
+  removeMonocleIfSingleNode "$desktopId"
+done &
+
+bspc subscribe node_remove | while read -r _ _ desktopId _; do
+  removeMonocleIfSingleNode "$desktopId"
+done &
+
+bspc subscribe node_transfer | while read -r _ _ desktopId _ _ _ _; do
+  if [ "$(bspc query -D -d focused)" = "$desktopId" ]; then
+    removeMonocleIfSingleNode "$desktopId"
+  fi
+done &
+
+bspc subscribe node_state | while read -r _ _ _ node state status; do
+  if [[ "$state" == "floating" ]]; then
+    case "$status" in
+      off) setShadow "$node" false;;
+      on) setShadow "$node" true;;
+    esac
+  fi
+done &

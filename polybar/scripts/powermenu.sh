@@ -12,7 +12,10 @@ rofi_command="rofi -no-config -theme $dir/powermenu.rasi -monitor -1"
 
 # Options
 lock=" Lock"
-reload=" Reload bspwm"
+reloadFull=" Reload BSPWM"
+reloadPolybar=" Reload Polybar"
+reloadPicom=" Reload Picom"
+reloadDesktop=" Reload Desktop"
 suspend="󰤄 Sleep"
 logout=" Logout"
 reboot=" Restart"
@@ -29,7 +32,7 @@ confirm_exit() {
 }
 
 # Variable passed to rofi
-options="$lock\n$reload\n$suspend\n$logout\n$reboot\n$shutdown"
+options="$lock\n$logout\n$suspend\n$shutdown\n$reboot\n\n$reloadFull\n$reloadPolybar\n$reloadPicom\n$reloadDesktop"
 
 chosen="$(echo -e "$options" | $rofi_command -p "Uptime: $uptime" -dmenu -selected-row 0)"
 case $chosen in
@@ -56,8 +59,17 @@ case $chosen in
 			betterlockscreen -l
 		fi
         ;;
-    $reload)
+    $reloadFull)
 		$HOME/.config/bspwm/bspwmrc
+        ;;
+    $reloadPolybar)
+		$HOME/.config/bspwm/startup/polybar-startup
+        ;;
+    $reloadPicom)
+		$HOME/.config/bspwm/startup/picom-startup
+        ;;
+    $reloadDesktop)
+		$HOME/.config/bspwm/startup/desktop-startup
         ;;
     $suspend)
 		ans=$(confirm_exit &)
