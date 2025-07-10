@@ -112,6 +112,16 @@ function handleShadows {
   fi
 }
 
+function removeMonocleIfSingleNode {
+  node_count=$(bspc query -N -d "$1" | wc -l)
+
+  if [ "$node_count" -le 1 ]; then
+    bspc desktop -l tiled
+  fi
+
+  $HOME/.config/polybar/scripts/check-monocles.sh &
+}
+
 
 #  █▄▄ █▀ █▀█ █ █ █ █▀▄▀█   █▀ █ █ █▄▄ █▀ █▀▀ █▀█ █ █▀█ ▀█▀ █ █▀█ █▄ █ █▀
 #  █▄█ ▄█ █▀▀ ▀▄▀▄▀ █ ▀ █   ▄█ █▄█ █▄█ ▄█ █▄▄ █▀▄ █ █▀▀  █  █ █▄█ █ ▀█ ▄█
@@ -129,8 +139,17 @@ bspc subscribe desktop_focus | while read -r _ _ desktopId; do
   layout=$(bspc query -T -d $desktopId | jq -r '.layout')
   handleShadows "$layout" "$desktopId"
 
-  bspc query -D -d 'focused.!occupied' -m focused && bspc desktop -l tiled
-  $HOME/.config/polybar/scripts/check-monocles.sh &
+  removeMonocleIfSingleNode "$desktopId"
+done &
+
+bspc subscribe node_remove | while read -r _ _ desktopId _; do
+  removeMonocleIfSingleNode "$desktopId"
+done &
+
+bspc subscribe node_transfer | while read -r _ _ desktopId _ _ _ _; do
+  if [ "$(bspc query -D -d focused)" = "$desktopId" ]; then
+    removeMonocleIfSingleNode "$desktopId"
+  fi
 done &
 
 bspc subscribe node_state | while read -r _ _ _ node state status; do

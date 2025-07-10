@@ -191,3 +191,4 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 alias yt-dlp='yt-dlp --cookies-from-browser firefox'
+alias reload='source ~/.zshrc'

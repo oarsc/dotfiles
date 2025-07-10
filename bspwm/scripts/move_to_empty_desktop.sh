@@ -11,6 +11,9 @@ function execution {
             monitor=$(bspc query -M -m)
             action=""
         else
+            # If nothing on current destkop, focus next monitor
+            (bspc query -N -d focused || bspc monitor -f next) > /dev/null
+
             monitor=$(bspc query -M -m next)
         fi
     else
