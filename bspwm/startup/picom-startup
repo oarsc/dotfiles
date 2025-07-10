@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#  █▀█ █ █▀▀ █▀█ █▀▄▀█   █▀▀ █▀█ █▄ █ █▀▀ █ █▀▀
+#  █▀▀ █ █▄▄ █▄█ █ ▀ █   █▄▄ █▄█ █ ▀█ █▀  █ █▄█
+# ----------------------------------------------
+
+pgrep -x picom > /dev/null || picom -f --daemon --config "$HOME/.config/picom/picom.conf" &
