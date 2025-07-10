@@ -38,10 +38,6 @@ super + Escape
 # bspwm hotkeys
 #
 
-# toggle polybar
-super + x
-    ~/.config/polybar/scripts/polybar-toggle.sh
-
 # quit/restart bspwm
 super + ctrl + alt + {q,r}
 	bspc {quit,wm -r}
