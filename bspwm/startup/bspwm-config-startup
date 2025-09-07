@@ -19,7 +19,6 @@ wmname LG3D &
 bspc rule -a android-studio border=off follow=on
 bspc rule -a jetbrains-studio border=off follow=on
 bspc rule -a ualth border=off state=floating
-bspc rule -a "org.oar.ualkt.UalktApp" border=off state=floating
 bspc rule -a Dlancockpit border=off state=tiled
 #bspc rule -a Gimp desktop='^8' state=floating follow=on
 #bspc rule -a Chromium desktop='^2'
@@ -97,5 +96,52 @@ bspc subscribe node_state | while read -r _ _ _ node state status; do
       off) setShadow "$node" false;;
       on) setShadow "$node" true;;
     esac
+  fi
+done &
+
+
+# keep preselected node when using ualth. Remove the next script if not using the application "ualth"
+preNode=""
+preDir="cancel"
+preRatio="0.5"
+preNextKeep=false
+preBlock=false
+
+bspc subscribe node_presel | while read -r _ _ _ node action value; do
+  resetFlag() {
+    sleep 0.1
+    preBlock=false
+  }
+
+  preSaveData() {
+    if ! $preBlock; then
+      preNextKeep=false
+      preNode=$node
+      if [ "$action" = "dir" ]; then
+        preDir=$value
+        preRatio="0.5"
+      elif [ "$action" = "ratio" ]; then
+        preRatio=$value
+      else
+        preDir="cancel"
+      fi
+    fi
+  }
+
+  if [ "$action" = "cancel" ] && [ "$preDir" != "cancel" ]; then
+    if xprop -id "$(bspc query -N -n)" WM_CLASS | grep -q "ualth" || $preNextKeep; then
+      if $preNextKeep; then
+          preNextKeep=false
+      else
+          preNextKeep=true
+      fi
+      preBlock=true
+      bspc node $preNode -p $preDir -o $preRatio
+      resetFlag &
+    else
+      preSaveData
+    fi
+  else
+    preSaveData
   fi
 done &
