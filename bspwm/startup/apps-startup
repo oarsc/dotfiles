@@ -6,3 +6,4 @@
 
 pgrep -x ualth > /dev/null || ualth &
 pgrep -x dropbox > /dev/null || dropbox start &
+pgrep -x copy_to_primary || "$HOME/.config/bspwm/scripts/copy_to_primary.sh" &
