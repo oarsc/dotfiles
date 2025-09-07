@@ -1,2 +1,5 @@
 zsh/plugins/*
 !zsh/plugins/.gitkeep
+
+/polybar/scripts/*.jar
+/polybar/scripts/*.json
