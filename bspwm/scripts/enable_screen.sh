@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$#" -ne 1 ]; then
+if [ "$#" -lt 1 ]; then
     >&2 echo "Missing monitor index parameter. Use 0 to select all monitors"
     exit 1
 fi
@@ -16,7 +16,13 @@ INDEX=$(($1-1))
 array MONITORS "$(xrandr --query | grep " connected" | cut -d" " -f1)"
 array RESOLUTIONS "$(xrandr --query | grep " connected" -A 1 | grep -v " connected" | grep -v '\-\-' | awk '{print $1}')"
 
-POSITIONS=( "0x0 --rate 144" 2560x180 )
+# if second parameter is 1, then use 60Hz
+if [[ -n "$2" && "$2" -eq 1 ]]; then
+    POSITIONS=( "0x0 --rate 60" 2560x180 )
+else
+    POSITIONS=( "0x0 --rate 144" 2560x180 )
+fi
+
 
 LENGTH=${#MONITORS[@]}
 
