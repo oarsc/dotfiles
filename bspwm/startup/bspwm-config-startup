@@ -19,7 +19,6 @@ wmname LG3D &
 bspc rule -a android-studio border=off follow=on
 bspc rule -a jetbrains-studio border=off follow=on
 bspc rule -a ualth border=off state=floating
-bspc rule -a "org.oar.ualkt.UalktApp" border=off state=floating
 bspc rule -a Dlancockpit border=off state=tiled
 #bspc rule -a Gimp desktop='^8' state=floating follow=on
 #bspc rule -a Chromium desktop='^2'
@@ -99,3 +98,78 @@ bspc subscribe node_state | while read -r _ _ _ node state status; do
     esac
   fi
 done &
+
+
+# keep preselected node when using ualth. Remove the next script if not using the application "ualth"
+preNode=""
+preDir="cancel"
+preRatio="0.5"
+skipNextEvent=false
+appOpened=false
+
+bspc subscribe node_presel | while read -r _ _ _ node action value; do
+
+  if $skipNextEvent; then
+    skipNextEvent=false
+
+  #elif [ "$action" == "dir" ] && [ "$value" != "$preDir" ] || [ "$action" == "ratio" ] && [ "$value" != "$preRatio" ]; then
+  elif [ "$action" == "dir" ] || [ "$action" == "ratio" ]; then
+    preNode=$node
+    if [ "$action" = "dir" ]; then
+      preDir=$value
+      preRatio="0.5"
+    elif [ "$action" = "ratio" ]; then
+      preRatio=$value
+    else
+      preDir="cancel"
+      preRatio="0.5"
+    fi
+
+  #elif [ "$action" = "cancel" ] && [ "$preDir" != "cancel" ]; then
+  elif [ "$action" = "cancel" ]; then
+    if xprop -id "$(bspc query -N -n)" WM_CLASS | grep -q "ualth"; then
+      bspc node $preNode -p $preDir -o $preRatio
+      skipNextEvent=true
+      appOpened=true
+
+    elif $appOpened; then # when app closes:
+      bspc node $preNode -p $preDir -o $preRatio
+      appOpened=false
+    fi
+  fi
+
+done &
+
+
+# bspc subscribe node_presel | while read -r _ _ _ node action value; do
+#   preSaveData() {
+#     if [ "$preNode" != "$node" ] || [ "$action" == "dir" ] && [ "$value" != "$preDir" ] || [ "$action" == "ratio" ] && [ "$value" != "$preRatio" ]; then
+#       #preNextKeep=false
+#       preNode=$node
+#       if [ "$action" = "dir" ]; then
+#         preDir=$value
+#         preRatio="0.5"
+#       elif [ "$action" = "ratio" ]; then
+#         preRatio=$value
+#       else
+#         preDir="cancel"
+#       fi
+#     fi
+#   }
+#
+#
+#   if [ "$action" = "cancel" ] && [ "$preDir" != "cancel" ]; then
+#     if xprop -id "$(bspc query -N -n)" WM_CLASS | grep -q "ualth"; then
+#       if $preNextKeep; then
+#         preNextKeep=false
+#       else
+#         preNextKeep=true
+#       fi
+#       bspc node $preNode -p $preDir -o $preRatio
+#     else
+#       preSaveData
+#     fi
+#   else
+#     preSaveData
+#   fi
+# done &
