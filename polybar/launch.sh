@@ -18,10 +18,10 @@ if type "xrandr"; then
   MONITORS=$(xrandr --query | grep " connected" | grep "+" | cut -d" " -f1 | tr '\n' ' ');
   IFS=' ' read -r -a ARR_MONITORS <<< "$MONITORS"
 
-  MONITOR=${ARR_MONITORS[0]} polybar -q small -c "$DIR/config.ini" & pids+=($!)
+  MONITOR=${ARR_MONITORS[0]} polybar -q main -c "$DIR/config.ini" & pids+=($!)
 
   if [ ${ARR_MONITORS[1]} ]; then
-    MONITOR=${ARR_MONITORS[1]} polybar -q small-alt -c "$DIR/config.ini" & pids+=($!)
+    MONITOR=${ARR_MONITORS[1]} polybar -q main-alt -c "$DIR/config.ini" & pids+=($!)
   fi
 
 else
@@ -34,3 +34,4 @@ for pid in "${pids[@]}"; do
 done
 sleep 0.1
 
+$DIR/scripts/on-start.sh "${#ARR_MONITORS[@]}" "${pids[@]}"

@@ -20,6 +20,7 @@ suspend="󰤄 Sleep"
 logout=" Logout"
 reboot=" Restart"
 shutdown=" Shutdown"
+color=" Color change"
 
 # Confirmation
 confirm_exit() {
@@ -32,7 +33,7 @@ confirm_exit() {
 }
 
 # Variable passed to rofi
-options="$lock\n$logout\n$suspend\n$shutdown\n$reboot\n\n$reloadFull\n$reloadPolybar\n$reloadPicom\n$reloadDesktop"
+options="$lock\n$logout\n$suspend\n$shutdown\n$reboot\n$color\n$reloadFull\n$reloadPolybar\n$reloadPicom\n$reloadDesktop"
 
 chosen="$(echo -e "$options" | $rofi_command -p "Uptime: $uptime" -dmenu -selected-row 0)"
 case $chosen in
@@ -58,6 +59,9 @@ case $chosen in
 		elif [[ -f /usr/bin/betterlockscreen ]]; then
 			betterlockscreen -l
 		fi
+        ;;
+    $color)
+		$HOME/.config/polybar/scripts/color-switch.sh
         ;;
     $reloadFull)
 		$HOME/.config/bspwm/bspwmrc

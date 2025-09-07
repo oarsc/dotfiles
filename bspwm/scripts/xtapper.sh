@@ -5,7 +5,6 @@ pipe="/tmp/bspwm-xtapper-pipe"
 if [[ ! -p $pipe ]]; then
     rm "$pipe"
     mkfifo "$pipe"
-    notify-send "Creating pipe $pipe"
 fi
 
 function xTapper {
