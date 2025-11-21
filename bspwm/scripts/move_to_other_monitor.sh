@@ -16,4 +16,4 @@ function next {
     bspc query -M -m $1.focused && bspc node -f $2 || process
 }
 
-xTapper "$0 $@" execution 2 next
+xTapper "$0 $@" execution 0.5 next

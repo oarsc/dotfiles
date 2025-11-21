@@ -34,4 +34,4 @@ function next {
     bspc monitor -f next
 }
 
-xTapper "$0 $@" execution 2 next
+xTapper "$0 $@" execution 0.5 next
