@@ -214,14 +214,22 @@ super + shift + KP_Multiply
 
 # media keys
 XF86AudioRaiseVolume
-    pactl set-sink-volume $(pactl get-default-sink) +5%
+	pactl set-sink-volume $(pactl get-default-sink) +5%
 
 XF86AudioLowerVolume
-    pactl set-sink-volume $(pactl get-default-sink) -5%
+	pactl set-sink-volume $(pactl get-default-sink) -5%
 
 XF86AudioMute
-    pactl set-sink-mute $(pactl get-default-sink) toggle
+	pactl set-sink-mute $(pactl get-default-sink) toggle
 
+ctrl + shift + KP_Right
+	playerctl --all-players next
+
+ctrl + shift + KP_Left
+	playerctl --all-players previous
+
+ctrl + shift + KP_Begin
+	playerctl --all-players play-pause
 
 #
 # screen-shots
