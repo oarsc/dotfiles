@@ -186,9 +186,38 @@ ubuntu() {
         -itw /dir --rm --user $UID:$GID ubuntu:$version
 }
 
+mf-write() {
+    pm3 -c "hf mf cload -f \"$1\""
+}
+
+mf-read() {
+    pm3 -c "hf mf autopwn -f /home/oar/Dropbox/Private/hf-mf/keys $*"
+}
+
+mf() {
+    pm3 -c "hf mf $*"
+}
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 alias yt-dlp='yt-dlp --cookies-from-browser firefox'
 alias reload='source ~/.zshrc'
+
+http() {
+    docker run -d --rm -p "${1:-80}":80 -v "$PWD":/usr/src/app --name "${2:-http}" -w /usr/src/app node:18-alpine sh -c "npm install -g http-server && http-server -p 80"
+}
+
+_proton() {
+    if [ -z "$2" ]; then
+        echo "Usage: proton prefixName /path/to/game.exe"
+        return 1
+    fi
+    PREFIX_PATH="$HOME/Games/ProtonPrefixes/$1"
+    mkdir -p "$PREFIX_PATH"
+    STEAM_COMPAT_CLIENT_INSTALL_PATH="$HOME/.steam/steam" \
+    STEAM_COMPAT_DATA_PATH="$PREFIX_PATH" \
+    "$HOME/Games/hdd-link/steamapps/common/Proton 10.0/proton" run "$2"
+}
+
