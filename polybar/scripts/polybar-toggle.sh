@@ -1,7 +1,6 @@
 #!/bin/bash
 
-#modules="stock-live memory cpu-temp"
-modules="stock-live"
+modules="stock-live memory cpu-temp"
 
 if [ -e "$HOME/.polybar-hidden" ]; then
   rm "$HOME/.polybar-hidden"
