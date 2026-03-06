@@ -223,13 +223,13 @@ XF86AudioMute
 	pactl set-sink-mute $(pactl get-default-sink) toggle
 
 ctrl + shift + KP_Right
-	playerctl --all-players next
+	playerctl -p spotify next || playerctl -p vlc next || playerctl --all-players next
 
 ctrl + shift + KP_Left
-	playerctl --all-players previous
+	playerctl -p spotify previous || playerctl -p vlc previous || playerctl --all-players previous
 
 ctrl + shift + KP_Begin
-	playerctl --all-players play-pause
+	playerctl -p spotify play-pause || playerctl -p vlc play-pause || playerctl --all-players play-pause
 
 #
 # screen-shots
