@@ -75,6 +75,7 @@ if type "xrandr"; then
 
     $HOME/.config/bspwm/startup/polybar-startup &
     $HOME/.config/bspwm/startup/bspwm-screen-startup &
+    $HOME/.config/bspwm/startup/desktop-startup &
 
 else
     >&2 echo "xrandr not found"
