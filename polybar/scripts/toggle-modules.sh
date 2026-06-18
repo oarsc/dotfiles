@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-module_names="public-network"
+module_names="cpu-temp"
 
 for module in $module_names; do
   polybar-msg action $module module_toggle
