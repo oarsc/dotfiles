@@ -15,3 +15,4 @@ $HOME/.config/bspwm/startup/apps-startup &
 $HOME/.config/bspwm/startup/polybar-startup &
 $HOME/.config/bspwm/startup/bspwm-screen-startup &
 $HOME/.config/bspwm/startup/bspwm-config-startup &
+$HOME/.config/bspwm/startup/mount-disks-startup &
