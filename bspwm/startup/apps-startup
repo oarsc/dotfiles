@@ -6,4 +6,5 @@
 
 pgrep -x ualth > /dev/null || ualth &
 pgrep -x dropbox > /dev/null || dropbox start &
-pgrep -x copy_to_primary || "$HOME/.config/bspwm/scripts/copy_to_primary.sh" &
+pgrep -x copy_to_primary > /dev/null || "$HOME/.config/bspwm/scripts/copy_to_primary.sh" &
+findmnt /dev/sda3 > /dev/null || udisksctl mount -b /dev/sda3 &
