@@ -9,9 +9,8 @@ sudo usermod -aG docker $USER
 sudo systemctl enable docker.service
 sudo systemctl start docker.service
 
-rm "$CONFIGDIR/hyprland.conf"
-
-ln -s "$BASEDIR/hyprland.conf" "$CONFIGDIR/hyprland.conf"
+rm -fr "$CONFIGDIR/hypr/config"
+ln -s "$BASEDIR/hypr-config" "$CONFIGDIR/hypr/config"
 
 exit
 
