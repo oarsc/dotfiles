@@ -13,6 +13,7 @@ hl.config({
         repeat_delay = 250,
 
         follow_mouse = 0,
+        float_switch_override_focus = 0,
         -- sensitivity = -0.25,
 
         touchpad = {

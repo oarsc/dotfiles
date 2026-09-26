@@ -3,25 +3,124 @@ local noctCall = "noctalia msg "
 local launchPrefix = "uwsm app -- " -- if you are not using UWSM, make this empty (e.g. "")
 
 ---------------------------
+----- CUSTOM COMMANDS -----
+---------------------------
+
+function swapMonitorContents()
+    local monitors = hl.get_monitors()
+    if #monitors ~= 2 then return end
+
+    local monitor1 = monitors[1]
+    local monitor2 = monitors[2]
+
+    local windowsInWorkspace1 = hl.get_workspace_windows(monitor1.active_workspace)
+    local windowsInWorkspace2 = hl.get_workspace_windows(monitor2.active_workspace)
+
+    for _, w in pairs(windowsInWorkspace1) do
+        hl.dispatch(
+            hl.dsp.window.move({ monitor = monitor2, window = w })
+        )
+    end
+
+    for _, w in pairs(windowsInWorkspace2) do
+        hl.dispatch(
+            hl.dsp.window.move({ monitor = monitor1, window = w })
+        )
+    end
+end
+
+function moveToMonitorEmptyWorkspace(monitor, currentWindow)
+    for idx, workspace in ipairs(hl.get_workspaces()) do
+        if workspace.monitor == monitor then
+            if #hl.get_workspace_windows(workspace) == 0 then
+                hl.dispatch(
+                    hl.dsp.window.move({ workspace = workspace, window = currentWindow, follow = false })
+                )
+                return workspace
+            end
+        end
+    end
+    return nil
+end
+
+local moveToEmptyWorkspaceWindow = nil
+function moveToEmptyWorkspace()
+    if moveToEmptyWorkspaceWindow then
+        hl.dispatch(
+            hl.dsp.focus({ window = moveToEmptyWorkspaceWindow })
+        )
+        moveToEmptyWorkspaceWindow = nil
+
+    else
+        moveToEmptyWorkspaceWindow = hl.get_active_window()
+        if not moveToEmptyWorkspaceWindow then return end
+
+        hl.timer(function()
+            moveToEmptyWorkspaceWindow = nil
+        end, {
+            timeout = 1000,
+            type = "oneshot",
+        })
+        moveToMonitorEmptyWorkspace(moveToEmptyWorkspaceWindow.monitor, moveToEmptyWorkspaceWindow)
+    end
+end
+
+
+local moveToSecondaryMonitorEmptyWorkspaceWindow = nil
+function moveToSecondaryMonitorEmptyWorkspace()
+    local monitors = hl.get_monitors()
+    if #monitors ~= 2 then return end
+
+    if moveToSecondaryMonitorEmptyWorkspaceWindow then
+        hl.dispatch(
+            hl.dsp.focus({ window = moveToSecondaryMonitorEmptyWorkspaceWindow })
+        )
+        moveToSecondaryMonitorEmptyWorkspaceWindow = nil
+
+    else
+        moveToSecondaryMonitorEmptyWorkspaceWindow = hl.get_active_window()
+        if not moveToSecondaryMonitorEmptyWorkspaceWindow then return end
+
+        hl.timer(function()
+            moveToSecondaryMonitorEmptyWorkspaceWindow = nil
+        end, {
+            timeout = 1000,
+            type = "oneshot",
+        })
+        local monitor = monitors[1] == moveToSecondaryMonitorEmptyWorkspaceWindow.monitor and monitors[2] or monitors[1]
+        moveToMonitorEmptyWorkspace(monitor, moveToSecondaryMonitorEmptyWorkspaceWindow)
+    end
+end
+
+
+---------------------------
 ---- WINDOW MANAGEMENT ----
 ---------------------------
 
 -- Window manipulation
-hl.bind(mainMod .. " + SHIFT + Escape", hl.dsp.exec_cmd("hyprctl kill"))
-hl.bind(mainMod .. " + SHIFT + Q",      hl.dsp.window.close())
-hl.bind(mainMod .. " + T",    hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + D",              hl.dsp.window.fullscreen({ mode = 1 }))
-hl.bind(mainMod .. " + F",              hl.dsp.window.fullscreen())
-hl.bind(mainMod .. " + R",              hl.dsp.layout("togglesplit"))
-
+hl.bind(mainMod .. " + SHIFT + Escape",       hl.dsp.exec_cmd("hyprctl kill"))
+hl.bind(mainMod .. " + SHIFT + Q",            hl.dsp.window.close())
+hl.bind(mainMod .. " + T",                    hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + D",                    hl.dsp.window.fullscreen({ mode = 1 }))
+hl.bind(mainMod .. " + F",                    hl.dsp.window.fullscreen())
+hl.bind(mainMod .. " + R",                    hl.dsp.layout("togglesplit"))
 
 -- Change focus
-hl.bind(mainMod .. " + Left",          hl.dsp.focus({ direction = "left" }))
-hl.bind(mainMod .. " + Right",         hl.dsp.focus({ direction = "right" }))
-hl.bind(mainMod .. " + Up",            hl.dsp.focus({ direction = "up" }))
-hl.bind(mainMod .. " + Down",          hl.dsp.focus({ direction = "down" }))
-hl.bind("ALT + Tab",                   hl.dsp.window.cycle_next())
-hl.bind(mainMod .. " + SHIFT + Tab",   hl.dsp.exec_cmd(noctCall .. "window-switcher"))
+hl.bind(mainMod .. " + Left",                 hl.dsp.focus({ direction = "left" }))
+hl.bind(mainMod .. " + Right",                hl.dsp.focus({ direction = "right" }))
+hl.bind(mainMod .. " + Up",                   hl.dsp.focus({ direction = "up" }))
+hl.bind(mainMod .. " + Down",                 hl.dsp.focus({ direction = "down" }))
+
+hl.bind(mainMod .. " + Q",                    hl.dsp.focus({ last = true }))
+hl.bind(mainMod .. " + masculine",            hl.dsp.focus({ monitor = "+1" }))
+hl.bind(mainMod .. " + SHIFT + masculine",    hl.dsp.window.move({ monitor = "+1" }))
+hl.bind(mainMod .. " + Tab",                  hl.dsp.focus({ workspace = "previous_per_monitor" }))
+hl.bind("ALT + Tab",                          hl.dsp.window.cycle_next())
+hl.bind(mainMod .. " + SHIFT + Tab",          hl.dsp.exec_cmd(noctCall .. "window-switcher"))
+
+hl.bind(mainMod .. " + CONTROL + masculine",  swapMonitorContents)
+hl.bind(mainMod .. " + W",                    moveToEmptyWorkspace)
+hl.bind(mainMod .. " + SHIFT + W",            moveToSecondaryMonitorEmptyWorkspace)
 
 -- Move active window around workspaces & monitors
 hl.bind(mainMod .. " + SHIFT + Up",                   hl.dsp.window.move({ direction = "u" }))
@@ -112,9 +211,6 @@ hl.bind(mainMod .. " + P",     hl.dsp.exec_cmd("hyprpicker -a -n"))
 hl.bind("Print",               hl.dsp.exec_cmd(noctCall .. "screenshot-region"))
 hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd(noctCall .. "screenshot-fullscreen"))
 
--- Theming and Wallpaper
-hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(noctCall .. "panel-toggle wallpaper"))
-
 -- Clipboard
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd(noctCall .. "panel-toggle clipboard"))
 
@@ -134,7 +230,7 @@ hl.bind(mainMod .. " + 3", hl.dsp.focus({ monitor = MONITOR3 }))
 -- Absolute
 for i = 1, NUM_WPM do
     local key = i % 10
-    hl.bind(mainMod .. " + ALT + " .. key, hl.dsp.focus({ workspace = i }))
+    --hl.bind(mainMod .. " + ALT + " .. key, hl.dsp.focus({ workspace = i }))
 end
 -- Relative
 for i = 1, NUM_WPM do
@@ -149,7 +245,6 @@ hl.bind(mainMod .. " + CONTROL + Down",        hl.dsp.focus({ workspace = "empty
 
 hl.bind(mainMod .. " + Less",                  hl.dsp.focus({ workspace = "m-1" }))
 hl.bind(mainMod .. " + z",                     hl.dsp.focus({ workspace = "m+1" }))
-hl.bind(mainMod .. " + Tab",                   hl.dsp.focus({ workspace = "previous" }))
 hl.bind(mainMod .. " + SHIFT + Less",          hl.dsp.window.move({ workspace = "m-1" }))
 hl.bind(mainMod .. " + SHIFT + z",             hl.dsp.window.move({ workspace = "m+1" }))
 

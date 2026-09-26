@@ -30,11 +30,13 @@ RUN apt install -y \
     xauth \
     && rm -rf /var/lib/apt/lists/*
 
-# Download installer
-RUN wget -O /tmp/devolo.run \
-    https://www.devolo.global/fileadmin/Web-Content/DE/products/hnw/devolo-cockpit/software/devolo-cockpit-v5-2-0-185-linux.run \
-    && chmod +x /tmp/devolo.run
+RUN mkdir -p /scripts
 
-RUN /tmp/devolo.run || true
+# Copy installer from the build context
+COPY devolo-cockpit-v5-2-0-185-linux.run /tmp/devolo.run
+COPY run-devolo-cockpit /scripts/devolo
 
-CMD ["/opt/devolo/dlancockpit/bin/dlancockpit"]
+RUN chmod +x /tmp/devolo.run && /tmp/devolo.run || true
+RUN chmod +x /scripts/devolo
+
+CMD ["/scripts/devolo"]

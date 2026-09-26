@@ -3,14 +3,23 @@
 BASEDIR=$(dirname $(readlink -e $0))
 CONFIGDIR="$HOME/.config"
 
-sudo pacman -s vi vim docker distrobox waybar network-manager-applet
-
-sudo usermod -aG docker $USER
-sudo systemctl enable docker.service
-sudo systemctl start docker.service
+sudo pacman -s vi vim docker distrobox spotify-launcher network-manager-applet
 
 rm -fr "$CONFIGDIR/hypr/config"
 ln -s "$BASEDIR/hypr-config" "$CONFIGDIR/hypr/config"
+
+# Configure SSH-Agent permanently
+systemctl --user enable --now ssh-agent.service
+echo 'AddKeysToAgent yes' >> ~/.ssh/config
+
+# Set dotfiles .zshrc
+rm "$HOME/.zshrc"
+ln -s "$BASEDIR/.zshrc" "$HOME/.zshrc"
+
+# Docker configuration
+sudo usermod -aG docker $USER
+sudo systemctl enable docker.service
+sudo systemctl start docker.service
 
 exit
 
@@ -21,7 +30,6 @@ ln -s "$BASEDIR/picom"                "$CONFIGDIR/picom"
 ln -s "$BASEDIR/gtk-3.0/settings.ini" "$CONFIGDIR/gtk-4.0/settings.ini"
 ln -s "$BASEDIR/zsh"                  "$CONFIGDIR/zsh"
 ln -s "$BASEDIR/dunst"                "$CONFIGDIR/dunst"
-ln -s "$BASEDIR/.zshrc"               "$HOME/.zshrc"
 ln -s "$BASEDIR/.xprofile"            "$HOME/.xprofile"
 
 

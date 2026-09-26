@@ -6,7 +6,7 @@ hl.config({
         gaps_out = 20,
         border_size = 2,
         extend_border_grab_area = 100,
-        resize_on_border = true,
+        resize_on_border = false,
         col = {
             active_border = {
                 colors = { CACHYLBLUE, CACHYLGREEN },

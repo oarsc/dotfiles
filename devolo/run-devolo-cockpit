@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if ! pgrep -x devolonetsvc > /dev/null; then
+    echo "Starting devolonetsvc..."
+    sudo /etc/init.d/devolonetsvc start
+fi
+
+exec /opt/devolo/dlancockpit/bin/dlancockpit

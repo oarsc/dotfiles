@@ -5,25 +5,24 @@
 docker build -t devolo .
 ```
 
-## Run with distrobox
+## Manual container configuration
 Create container
 ```sh
 distrobox create --name cockpitbox --image devolo
 ```
 
-Run container
+Generate an executable bin at host
 ```sh
-distrobox enter cockpitbox -- /opt/devolo/dlancockpit/bin/dlancockpit
+distrobox enter cockpitbox -- distrobox-export --bin /scripts/devolo
 ```
 
-Create bin
+Or enter to the container manually and execute the script
 ```sh
-# enter with
-distrobox enter cockpitbox
+distrobox enter cockpitbox -- bash
 
-# set bin at host with
-distrobox-export --bin /opt/devolo/dlancockpit/bin/dlancockpit
+/scripts/devolo
 ```
+
 
 ## Without distrobox
 ```sh
