@@ -11,6 +11,8 @@ hl.config({
         col = {
             splash = CACHYLGREEN,
         },
+        mouse_move_focuses_monitor = false,
+        focus_on_activate = true,
         middle_click_paste = false,
         enable_swallow = true,
         disable_hyprland_logo = false,
