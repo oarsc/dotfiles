@@ -6,6 +6,27 @@ local launchPrefix = "uwsm app -- " -- if you are not using UWSM, make this empt
 ----- CUSTOM COMMANDS -----
 ---------------------------
 
+function focusLastWorkspace()
+    local currentWorkspace = hl.get_active_workspace()
+    local windows = hl.get_windows()
+
+    table.sort(windows, function(a, b)
+        return a.focus_history_id < b.focus_history_id
+    end)
+
+    for _, w in pairs(windows) do
+        if w.monitor == currentWorkspace.monitor and w.workspace ~= currentWorkspace then
+            hl.dispatch(
+                hl.dsp.focus({ window = w })
+            )
+            return
+        end
+    end
+    hl.dispatch(
+        hl.dsp.focus({ workspace = "previous_per_monitor" })
+    )
+end
+
 function swapMonitorContents()
     local monitors = hl.get_monitors()
     if #monitors ~= 2 then return end
@@ -30,14 +51,14 @@ function swapMonitorContents()
 end
 
 function moveToMonitorEmptyWorkspace(monitor, currentWindow)
-    for idx, workspace in ipairs(hl.get_workspaces()) do
-        if workspace.monitor == monitor then
-            if #hl.get_workspace_windows(workspace) == 0 then
-                hl.dispatch(
-                    hl.dsp.window.move({ workspace = workspace, window = currentWindow })
-                )
-                return workspace
-            end
+    local workspaces = monitor.name == MONITOR1 and MONITOR1_WORKSPACES or MONITOR2_WORKSPACES
+
+    for _, workspace in ipairs(workspaces) do
+        if #hl.get_workspace_windows(workspace) == 0 then
+            hl.dispatch(
+                hl.dsp.window.move({ workspace = workspace, window = currentWindow })
+            )
+            return workspace
         end
     end
     return nil
@@ -69,12 +90,23 @@ function moveToSecondaryMonitorEmptyWorkspace()
     end
 end
 
+function toogleMonitor(monitorName)
+    return function()
+        hl.monitor({ output = monitorName, disabled = hl.get_monitor(monitorName) ~= nil })
+    end
+end
+
 ---------------------------
 ---- WINDOW MANAGEMENT ----
 ---------------------------
 
+hl.bind(mainMod .. " + SHIFT + F1", toogleMonitor(MONITOR1))
+hl.bind(mainMod .. " + SHIFT + F2", toogleMonitor(MONITOR2))
+
+
 -- Window manipulation
-hl.bind(mainMod .. " + SHIFT + Escape",       hl.dsp.exec_cmd("hyprctl kill"))
+hl.bind(mainMod .. " + Escape",               hl.dsp.exec_cmd("hyprctl reload"))
+hl.bind(mainMod .. " + SHIFT + Escape",       hl.dsp.exec_cmd(noctCall .. "panel-toggle launcher /session"))
 hl.bind(mainMod .. " + SHIFT + Q",            hl.dsp.window.close())
 hl.bind(mainMod .. " + T",                    hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + D",                    hl.dsp.window.fullscreen({ mode = 1 }))
@@ -87,12 +119,12 @@ hl.bind(mainMod .. " + Right",                hl.dsp.focus({ direction = "right"
 hl.bind(mainMod .. " + Up",                   hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + Down",                 hl.dsp.focus({ direction = "down" }))
 
-hl.bind(mainMod .. " + Q",                    hl.dsp.focus({ last = true }))
+hl.bind(mainMod .. " + SHIFT + Tab",          hl.dsp.focus({ last = true }))
 hl.bind(mainMod .. " + masculine",            hl.dsp.focus({ monitor = "+1" }))
 hl.bind(mainMod .. " + SHIFT + masculine",    hl.dsp.window.move({ monitor = "+1" }))
-hl.bind(mainMod .. " + Tab",                  hl.dsp.focus({ workspace = "previous_per_monitor" }))
+hl.bind(mainMod .. " + Tab",                  focusLastWorkspace)
 hl.bind("ALT + Tab",                          hl.dsp.window.cycle_next())
-hl.bind(mainMod .. " + SHIFT + Tab",          hl.dsp.exec_cmd(noctCall .. "window-switcher"))
+hl.bind(mainMod .. " + Q",                    hl.dsp.exec_cmd(noctCall .. "window-switcher"))
 
 hl.bind(mainMod .. " + CONTROL + masculine",  swapMonitorContents)
 hl.bind(mainMod .. " + W",                    moveToEmptyWorkspace)
@@ -150,10 +182,10 @@ hl.bind(mainMod .. " + SHIFT + Return", hl.dsp.exec_cmd(launchPrefix .. BROWSER)
 hl.bind(mainMod .. " + E",              hl.dsp.exec_cmd(launchPrefix .. FILE_MANAGER))
 hl.bind(mainMod .. " + C",              hl.dsp.exec_cmd(launchPrefix .. CALCULATOR))
 hl.bind("XF86Calculator",               hl.dsp.exec_cmd(launchPrefix .. CALCULATOR))
-hl.bind("CONTROL + SHIFT + Escape",     hl.dsp.exec_cmd(launchPrefix .. TERMINAL .. " -e btop"))
-hl.bind(mainMod .. " + Escape",         hl.dsp.exec_cmd(noctCall .. "settings-toggle"))
+hl.bind("CONTROL + SHIFT + Escape",     hl.dsp.exec_cmd(launchPrefix .. TERMINAL .. " -o confirm_os_window_close=0 -e btop"))
 hl.bind(mainMod .. " + X",              hl.dsp.exec_cmd(noctCall .. "panel-toggle control-center"))
 hl.bind(mainMod .. " + Space",          hl.dsp.exec_cmd(noctCall .. "panel-toggle launcher"))
+hl.bind("ALT + Space",                  hl.dsp.exec_cmd("timeout 0.1s sh -c 'echo open > /tmp/ualth.pipe'"))
 hl.bind(mainMod .. " + period",         hl.dsp.exec_cmd(noctCall .. "panel-toggle launcher /emo"))
 hl.bind(mainMod .. " + L",              hl.dsp.exec_cmd(noctCall .. "session lock"))
 hl.bind(mainMod .. " + ALT + C",        hl.dsp.exec_cmd(noctCall .. "panel-toggle session"))
@@ -197,21 +229,11 @@ hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(noctCall .. "panel-toggle control-cen
 ---- WORKSPACES & MONITORS ----
 -------------------------------
 
--- Focus on monitors
-hl.bind(mainMod .. " + 1", hl.dsp.focus({ monitor = MONITOR1 }))
-hl.bind(mainMod .. " + 2", hl.dsp.focus({ monitor = MONITOR2 }))
-hl.bind(mainMod .. " + 3", hl.dsp.focus({ monitor = MONITOR3 }))
-
 -- Focus on workspace number
--- Absolute
+-- Relative to monitor
 for i = 1, NUM_WPM do
     local key = i % 10
-    --hl.bind(mainMod .. " + ALT + " .. key, hl.dsp.focus({ workspace = i }))
-end
--- Relative
-for i = 1, NUM_WPM do
-    local key = i % 10
-    hl.bind(mainMod .. " + CONTROL + " .. key, hl.dsp.focus({ workspace = "m~" .. i }))
+    hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = "m~" .. i }))
 end
 
 -- Move to adjacent workspaces and next empty on a given monitor

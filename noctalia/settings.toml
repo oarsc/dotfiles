@@ -4,9 +4,9 @@ config_version = 14
 ui_scale = 1.1500000096857548
 
 [bar.default]
-center = [ "active_window", "media" ]
-end = [ "group:g1", "spacer_1", "tray", "notifications", "network", "volume", "session" ]
-start = [ "launcher", "clock", "spacer_1", "workspaces" ]
+center = [ "active_window", "media", "hello" ]
+end = [ "group:g2", "spacer_1", "date", "spacer_1", "session" ]
+start = [ "launcher", "clock", "workspaces", "spacer_1", "group:g1", "spacer_1", "network_rx" ]
 
     [[bar.default.capsule_group]]
     accordion = false
@@ -15,12 +15,51 @@ start = [ "launcher", "clock", "spacer_1", "workspaces" ]
     enabled = true
     fill = "on_secondary"
     id = "g1"
-    members = [ "sysmon_3", "sysmon_2", "ram", "temp" ]
+    members = [ "sysmon_2", "ram", "temp" ]
     opacity = 1.0
     padding = 6.0
 
+    [[bar.default.capsule_group]]
+    accordion = false
+    accordion_direction = "end"
+    enabled = true
+    fill = "on_secondary"
+    id = "g2"
+    members = [ "tray", "clipboard", "notifications", "network", "volume" ]
+    opacity = 1.0
+    padding = 6.0
+
+[control_center]
+hidden_tabs = [ "monitor", "power" ]
+sidebar_section = "none"
+width = 1000
+
+    [[control_center.shortcuts]]
+    type = "wifi"
+
+    [[control_center.shortcuts]]
+    type = "bluetooth"
+
+    [[control_center.shortcuts]]
+    type = "nightlight"
+
+    [[control_center.shortcuts]]
+    type = "notification"
+
+    [[control_center.shortcuts]]
+    type = "power_profile"
+
+    [[control_center.shortcuts]]
+    type = "clipboard"
+
 [location]
 address = "Badalona"
+custom_schedule = true
+sunrise = "05:00"
+sunset = "18:30"
+
+[lockscreen]
+monitors = [ "HDMI-A-1" ]
 
 [lockscreen_widgets]
 enabled = false
@@ -86,39 +125,106 @@ widget_order = [ "lockscreen-login-box@DP-2", "lockscreen-login-box@HDMI-A-1" ]
         show_unlock_hint = true
         show_weather = true
 
+[nightlight]
+enabled = true
+
+[plugins]
+enabled = [ "oar/hello-world" ]
+
+    [[plugins.source]]
+    kind = "git"
+    location = "https://github.com/noctalia-dev/official-plugins"
+    name = "official"
+
+    [[plugins.source]]
+    kind = "git"
+    location = "https://github.com/noctalia-dev/community-plugins"
+    name = "community"
+
+    [[plugins.source]]
+    kind = "path"
+    location = "~/.config/noctalia/plugins"
+    name = "my-plugins"
+
+[shell]
+clipboard_confirm_clear_history = false
+
+    [shell.panel]
+    control_center_position = "center"
+
+    [shell.window_switcher]
+    mru = true
+
 [theme]
 builtin = "Catppuccin"
 community_palette = "Oxocarbon"
+mode = "dark"
 source = "wallpaper"
-wallpaper_scheme = "m3-tonal-spot"
+wallpaper_scheme = "m3-rainbow"
 
-[wallpaper.default]
-path = "/home/oar/Pictures/wallpaper.jpg"
+[wallpaper]
+directory = "~/Pictures/wallpapers"
 
-[wallpaper.last]
-path = "/home/oar/Pictures/wallpaper.jpg"
+    [wallpaper.default]
+    path = "/home/oar/Pictures/wallpapers/cachy.jpg"
 
-[wallpaper.monitors.DP-2]
-path = "/home/oar/Pictures/wallpaper.jpg"
+    [wallpaper.last]
+    path = "/home/oar/Pictures/wallpapers/cachy.jpg"
 
-[wallpaper.monitors.HDMI-A-1]
-path = "/home/oar/Pictures/wallpaper.jpg"
+    [wallpaper.monitors.DP-2]
+    path = "/home/oar/Pictures/wallpapers/cachy.jpg"
+
+    [wallpaper.monitors.HDMI-A-1]
+    path = "/home/oar/Pictures/wallpapers/cachy.jpg"
 
 [widget.active_window]
 enabled = false
 
+[widget.clock]
+enabled = false
+
+[widget.date]
+format = "{:%H%M%S %m%d%Y}"
+
+[widget.hello]
+enabled = false
+type = "oar/hello-world:hello"
+
+[widget.launcher]
+color = "on_surface"
+
 [widget.media]
-max_length = 800
+max_length = 731
+show_progress = true
+
+[widget.network]
+color = "on_surface"
+show_label = false
+
+    [widget.network.actions]
+    right = "exec devolo"
+
+[widget.network_rx]
+visualization = "none"
+
+[widget.notifications]
+color = "on_surface"
 
 [widget.ram]
 show_value = false
 
-[widget.sysmon_2]
-show_value = true
+[widget.session]
+color = "#8B8B8B"
 
-[widget.sysmon_3]
-show_value = false
+[widget.sysmon_2]
 stat = "gpu_usage"
 
 [widget.temp]
 show_value = true
+visualization = "none"
+
+[widget.volume]
+color = "on_surface"
+
+[widget.workspaces]
+focused_output_only = true

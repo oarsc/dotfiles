@@ -1,0 +1,9 @@
+id = "oar/hello-world"
+name = "Hello World"
+version = "1.0.0"
+plugin_api = 3
+author = "oar"
+
+[[widget]]
+id = "hello"
+entry = "widget.luau"

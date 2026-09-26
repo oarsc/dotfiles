@@ -1,0 +1,23 @@
+#!/bin/env bash
+
+set -euo pipefail
+
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 prefixName /path/to/game.exe"
+    exit 1
+fi
+
+STEAM_PATH="$HOME/.steam/steam/"
+PREFIX_PATH="/media/oar/HDD-ext4/cachy/games/proton-prefixes/"
+PROTON_PATH="$HOME/.local/share/Steam/steamapps/common/Proton - Experimental/proton"
+
+if [ ! -f "$PROTON_PATH" ]; then
+    echo "Proton not found: $PROTON_PATH"
+    exit 1
+fi
+
+mkdir -p "$PREFIX_PATH"
+
+STEAM_COMPAT_CLIENT_INSTALL_PATH="$STEAM_PATH" \
+STEAM_COMPAT_DATA_PATH="$PREFIX_PATH$1" \
+"$PROTON_PATH" run "$2"

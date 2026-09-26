@@ -40,7 +40,7 @@ hl.window_rule({
         initial_title = "^$",
     },
     center           = true,
-    float            = true,
+    float            = false,
     fullscreen       = false,
     fullscreen_state = 0,
     workspace        = gamingWorkspace,
@@ -61,11 +61,19 @@ hl.window_rule({
         title = "negative:^(Moving.*|Create New.*|Extract.*|Compress.*|Copying.*|Progress.*|Configure.*|Properties.*|Choose\\sApplication.*)$",
     },
     float = true,
-    size = { "max(monitor_w, monitor_h)*0.50", "min(monitor_w, monitor_h)*0.55" },
-    move = {
-        "max(20, min(cursor_x - (window_w*0.50), monitor_w - window_w + 20))", -- X axis clamping
-        "max(20, min(cursor_y - 50, monitor_h - window_h + 20))" -- Y axis clamping
+    size = { "max(monitor_w, monitor_h)*0.60", "min(monitor_w, monitor_h)*0.65" },
+--    move = {
+--        "max(20, min(cursor_x - (window_w*0.50), monitor_w - window_w + 20))", -- X axis clamping
+--        "max(20, min(cursor_y - 50, monitor_h - window_h + 20))" -- Y axis clamping
+--    },
+})
+
+hl.window_rule({
+    match = {
+        class = "^(ualth)$",
     },
+    float = true,
+    focus_on_activate = true,
 })
 
 -- Opacity Overrides

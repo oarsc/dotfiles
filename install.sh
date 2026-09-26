@@ -3,7 +3,8 @@
 BASEDIR=$(dirname $(readlink -e $0))
 CONFIGDIR="$HOME/.config"
 
-sudo pacman -s vi vim docker distrobox spotify-launcher network-manager-applet
+sudo pacman -s vi vim docker distrobox spotify-launcher nvm
+#network-manager-applet
 
 rm -fr "$CONFIGDIR/hypr/config"
 ln -s "$BASEDIR/hypr-config" "$CONFIGDIR/hypr/config"
@@ -12,9 +13,18 @@ ln -s "$BASEDIR/hypr-config" "$CONFIGDIR/hypr/config"
 systemctl --user enable --now ssh-agent.service
 echo 'AddKeysToAgent yes' >> ~/.ssh/config
 
+# add bins
+for file in "$PWD/bin/"*; do
+    ln -s "$file" "$HOME/.local/bin/$(basename "$file")"
+done
+
 # Install fonts
 mkdir -p "$HOME/.local/share/fonts"
 cp -rf $BASEDIR/fonts/* "$HOME/.local/share/fonts"
+
+# Install wallpapers
+mkdir -p "$HOME/Pictures/wallpapers"
+cp -rf $BASEDIR/wallpapers/* "$HOME/Pictures/wallpapers"
 
 # Set dotfiles .zshrc
 rm "$HOME/.zshrc"
@@ -33,8 +43,7 @@ ln -s "$BASEDIR/kitty/colors.conf" "$HOME/.config/kitty/colors.conf"
 # Noctalia
 mv "$HOME/.local/state/noctalia/settings.toml" "$HOME/.local/state/noctalia/settings.toml.BAK"
 ln -s "$BASEDIR/noctalia/settings.toml" "$HOME/.local/state/noctalia/settings.toml"
-
-
+ln -s "$BASEDIR/noctalia/plugins" "$HOME/.config/noctalia/plugins"
 
 exit
 
