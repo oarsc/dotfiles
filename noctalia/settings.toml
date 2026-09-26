@@ -1,0 +1,124 @@
+config_version = 14
+
+[accessibility]
+ui_scale = 1.1500000096857548
+
+[bar.default]
+center = [ "active_window", "media" ]
+end = [ "group:g1", "spacer_1", "tray", "notifications", "network", "volume", "session" ]
+start = [ "launcher", "clock", "spacer_1", "workspaces" ]
+
+    [[bar.default.capsule_group]]
+    accordion = false
+    accordion_direction = "end"
+    border = ""
+    enabled = true
+    fill = "on_secondary"
+    id = "g1"
+    members = [ "sysmon_3", "sysmon_2", "ram", "temp" ]
+    opacity = 1.0
+    padding = 6.0
+
+[location]
+address = "Badalona"
+
+[lockscreen_widgets]
+enabled = false
+schema_version = 2
+widget_order = [ "lockscreen-login-box@DP-2", "lockscreen-login-box@HDMI-A-1" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-2"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 960.0
+    cy = 898.0
+    output = "DP-2"
+    placement_height = 1080.0
+    placement_width = 1920.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@DP-2".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 1280.0
+    cy = 1258.0
+    output = "HDMI-A-1"
+    placement_height = 1440.0
+    placement_width = 2560.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+[theme]
+builtin = "Catppuccin"
+community_palette = "Oxocarbon"
+source = "wallpaper"
+wallpaper_scheme = "m3-tonal-spot"
+
+[wallpaper.default]
+path = "/home/oar/Pictures/wallpaper.jpg"
+
+[wallpaper.last]
+path = "/home/oar/Pictures/wallpaper.jpg"
+
+[wallpaper.monitors.DP-2]
+path = "/home/oar/Pictures/wallpaper.jpg"
+
+[wallpaper.monitors.HDMI-A-1]
+path = "/home/oar/Pictures/wallpaper.jpg"
+
+[widget.active_window]
+enabled = false
+
+[widget.media]
+max_length = 800
+
+[widget.ram]
+show_value = false
+
+[widget.sysmon_2]
+show_value = true
+
+[widget.sysmon_3]
+show_value = false
+stat = "gpu_usage"
+
+[widget.temp]
+show_value = true

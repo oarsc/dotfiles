@@ -12,6 +12,10 @@ ln -s "$BASEDIR/hypr-config" "$CONFIGDIR/hypr/config"
 systemctl --user enable --now ssh-agent.service
 echo 'AddKeysToAgent yes' >> ~/.ssh/config
 
+# Install fonts
+mkdir -p "$HOME/.local/share/fonts"
+cp -rf $BASEDIR/fonts/* "$HOME/.local/share/fonts"
+
 # Set dotfiles .zshrc
 rm "$HOME/.zshrc"
 ln -s "$BASEDIR/.zshrc" "$HOME/.zshrc"
@@ -20,6 +24,17 @@ ln -s "$BASEDIR/.zshrc" "$HOME/.zshrc"
 sudo usermod -aG docker $USER
 sudo systemctl enable docker.service
 sudo systemctl start docker.service
+
+# Kitty
+mv "$HOME/.config/kitty/kitty.conf" "$HOME/.config/kitty/kitty.conf.BAK"
+ln -s "$BASEDIR/kitty/kitty.conf" "$HOME/.config/kitty/kitty.conf"
+ln -s "$BASEDIR/kitty/colors.conf" "$HOME/.config/kitty/colors.conf"
+
+# Noctalia
+mv "$HOME/.local/state/noctalia/settings.toml" "$HOME/.local/state/noctalia/settings.toml.BAK"
+ln -s "$BASEDIR/noctalia/settings.toml" "$HOME/.local/state/noctalia/settings.toml"
+
+
 
 exit
 
