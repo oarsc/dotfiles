@@ -34,7 +34,7 @@ function moveToMonitorEmptyWorkspace(monitor, currentWindow)
         if workspace.monitor == monitor then
             if #hl.get_workspace_windows(workspace) == 0 then
                 hl.dispatch(
-                    hl.dsp.window.move({ workspace = workspace, window = currentWindow, follow = false })
+                    hl.dsp.window.move({ workspace = workspace, window = currentWindow })
                 )
                 return workspace
             end
@@ -43,55 +43,31 @@ function moveToMonitorEmptyWorkspace(monitor, currentWindow)
     return nil
 end
 
-local moveToEmptyWorkspaceWindow = nil
 function moveToEmptyWorkspace()
-    if moveToEmptyWorkspaceWindow then
-        hl.dispatch(
-            hl.dsp.focus({ window = moveToEmptyWorkspaceWindow })
-        )
-        moveToEmptyWorkspaceWindow = nil
+    local currentWindow = hl.get_active_window()
+    if not currentWindow then return end
 
-    else
-        moveToEmptyWorkspaceWindow = hl.get_active_window()
-        if not moveToEmptyWorkspaceWindow then return end
-
-        hl.timer(function()
-            moveToEmptyWorkspaceWindow = nil
-        end, {
-            timeout = 1000,
-            type = "oneshot",
-        })
-        moveToMonitorEmptyWorkspace(moveToEmptyWorkspaceWindow.monitor, moveToEmptyWorkspaceWindow)
-    end
+    moveToMonitorEmptyWorkspace(currentWindow.monitor, currentWindow)
 end
 
-
-local moveToSecondaryMonitorEmptyWorkspaceWindow = nil
 function moveToSecondaryMonitorEmptyWorkspace()
     local monitors = hl.get_monitors()
     if #monitors ~= 2 then return end
 
-    if moveToSecondaryMonitorEmptyWorkspaceWindow then
-        hl.dispatch(
-            hl.dsp.focus({ window = moveToSecondaryMonitorEmptyWorkspaceWindow })
-        )
-        moveToSecondaryMonitorEmptyWorkspaceWindow = nil
-
+    local currentWindow = hl.get_active_window()
+    if currentWindow then
+        local monitor = monitors[1] == currentWindow.monitor and monitors[2] or monitors[1]
+        moveToMonitorEmptyWorkspace(monitor, currentWindow)
     else
-        moveToSecondaryMonitorEmptyWorkspaceWindow = hl.get_active_window()
-        if not moveToSecondaryMonitorEmptyWorkspaceWindow then return end
+        local currentMonitor = currentWindow and currentWindow.monitor or hl.get_active_monitor()
+        local otherMonitor = monitors[1] == currentMonitor and monitors[2] or monitors[1]
 
-        hl.timer(function()
-            moveToSecondaryMonitorEmptyWorkspaceWindow = nil
-        end, {
-            timeout = 1000,
-            type = "oneshot",
-        })
-        local monitor = monitors[1] == moveToSecondaryMonitorEmptyWorkspaceWindow.monitor and monitors[2] or monitors[1]
-        moveToMonitorEmptyWorkspace(monitor, moveToSecondaryMonitorEmptyWorkspaceWindow)
+        local windowsInOtherWorkspace = hl.get_workspace_windows(otherMonitor.active_workspace)
+        if #windowsInOtherWorkspace > 0 then
+            moveToMonitorEmptyWorkspace(currentMonitor, windowsInOtherWorkspace[1])
+        end
     end
 end
-
 
 ---------------------------
 ---- WINDOW MANAGEMENT ----
