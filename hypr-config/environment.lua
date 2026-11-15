@@ -10,4 +10,5 @@
 -- hl.env("__GL_GSYNC_ALLOWED", "1") -- Controls if G-Sync capable monitors should use Variable Refresh Rate (VRR)
 
 hl.env("PATH", os.getenv("PATH") .. ":" .. os.getenv("HOME") .. "/.local/bin")
+hl.env("GNOME_KEYRING_CONTROL", os.getenv("XDG_RUNTIME_DIR") .. "/keyring")
 hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")

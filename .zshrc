@@ -24,9 +24,15 @@ unsetopt CORRECT_ALL
 
 source /usr/share/nvm/init-nvm.sh
 
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 export LESS="-Xr"
 export EDITOR=vim
+
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+for key in ~/.ssh/*(N.); do
+    [[ -f "$key" && "$key" != *.pub ]] || continue
+    ssh-keygen -y -P "" -f "$key" &>/dev/null || continue
+    ssh-add "$key" 2>/dev/null
+done
 
 function http {
     docker run -d --rm -p "${1:-80}":80 -v "$PWD":/usr/src/app --name "${2:-http}" -w /usr/src/app node:18-alpine sh -c "npm install -g http-server && http-server -p 80"
