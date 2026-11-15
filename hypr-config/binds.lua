@@ -105,7 +105,8 @@ hl.bind(mainMod .. " + SHIFT + F2", toogleMonitor(MONITOR2))
 
 
 -- Window manipulation
-hl.bind(mainMod .. " + Escape",               hl.dsp.exec_cmd("hyprctl reload"))
+hl.bind(mainMod .. " + ALT + CONTROL + R",    hl.dsp.exec_cmd("hyprctl reload"))
+hl.bind(mainMod .. " + Escape",               hl.dsp.exec_cmd(noctCall .. "window-switcher close"))
 hl.bind(mainMod .. " + SHIFT + Escape",       hl.dsp.exec_cmd(noctCall .. "panel-toggle launcher /session"))
 hl.bind(mainMod .. " + SHIFT + Q",            hl.dsp.window.close())
 hl.bind(mainMod .. " + T",                    hl.dsp.window.float({ action = "toggle" }))
@@ -119,12 +120,14 @@ hl.bind(mainMod .. " + Right",                hl.dsp.focus({ direction = "right"
 hl.bind(mainMod .. " + Up",                   hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + Down",                 hl.dsp.focus({ direction = "down" }))
 
-hl.bind(mainMod .. " + SHIFT + Tab",          hl.dsp.focus({ last = true }))
 hl.bind(mainMod .. " + masculine",            hl.dsp.focus({ monitor = "+1" }))
 hl.bind(mainMod .. " + SHIFT + masculine",    hl.dsp.window.move({ monitor = "+1" }))
-hl.bind(mainMod .. " + Tab",                  focusLastWorkspace)
 hl.bind("ALT + Tab",                          hl.dsp.window.cycle_next())
-hl.bind(mainMod .. " + Q",                    hl.dsp.exec_cmd(noctCall .. "window-switcher"))
+hl.bind("ALT + SHIFT + Tab",                  hl.dsp.window.cycle_next({ next = false }))
+
+hl.bind(mainMod .. " + SHIFT + Tab",          hl.dsp.exec_cmd(noctCall .. "window-switcher"))
+hl.bind(mainMod .. " + Tab",                  hl.dsp.exec_cmd(noctCall .. "window-switcher"))
+hl.bind(mainMod .. " + Q",                    focusLastWorkspace)
 
 hl.bind(mainMod .. " + CONTROL + masculine",  swapMonitorContents)
 hl.bind(mainMod .. " + W",                    moveToEmptyWorkspace)
@@ -178,6 +181,7 @@ hl.bind(mainMod .. " + code:86", function() zoomfunction(0.3) end, { repeating =
 ------------------
 
 hl.bind(mainMod .. " + Return",         hl.dsp.exec_cmd(launchPrefix .. TERMINAL))
+hl.bind("ALT + F2",                     hl.dsp.exec_cmd(noctCall .. "panel-toggle launcher '/r '"))
 hl.bind(mainMod .. " + SHIFT + Return", hl.dsp.exec_cmd(launchPrefix .. BROWSER))
 hl.bind(mainMod .. " + E",              hl.dsp.exec_cmd(launchPrefix .. FILE_MANAGER))
 hl.bind(mainMod .. " + C",              hl.dsp.exec_cmd(launchPrefix .. CALCULATOR))
@@ -186,7 +190,7 @@ hl.bind("CONTROL + SHIFT + Escape",     hl.dsp.exec_cmd(launchPrefix .. TERMINAL
 hl.bind(mainMod .. " + X",              hl.dsp.exec_cmd(noctCall .. "panel-toggle control-center"))
 hl.bind(mainMod .. " + Space",          hl.dsp.exec_cmd(noctCall .. "panel-toggle launcher"))
 hl.bind("ALT + Space",                  hl.dsp.exec_cmd("timeout 0.1s sh -c 'echo open > /tmp/ualth.pipe'"))
-hl.bind(mainMod .. " + period",         hl.dsp.exec_cmd(noctCall .. "panel-toggle launcher /emo"))
+hl.bind(mainMod .. " + period",         hl.dsp.exec_cmd(noctCall .. "panel-toggle launcher '/emo '"))
 hl.bind(mainMod .. " + L",              hl.dsp.exec_cmd(noctCall .. "session lock"))
 hl.bind(mainMod .. " + ALT + C",        hl.dsp.exec_cmd(noctCall .. "panel-toggle session"))
 
@@ -218,6 +222,7 @@ hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(noctCall .. "brightness-down"),
 hl.bind(mainMod .. " + P",     hl.dsp.exec_cmd("hyprpicker -a -n"))
 hl.bind("Print",               hl.dsp.exec_cmd(noctCall .. "screenshot-region"))
 hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd(noctCall .. "screenshot-fullscreen"))
+hl.bind("CONTROL + Print",     hl.dsp.exec_cmd(noctCall .. "plugin noctalia/screen_recorder:service all toggle region"))
 
 -- Clipboard
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd(noctCall .. "panel-toggle clipboard"))
