@@ -1,4 +1,4 @@
-config_version = 14
+config_version = 16
 
 [accessibility]
 ui_scale = 1.1500000096857548
@@ -85,7 +85,7 @@ widget_order = [ "lockscreen-login-box@DP-2", "lockscreen-login-box@HDMI-A-1" ]
     type = "login_box"
 
         [lockscreen_widgets.widget."lockscreen-login-box@DP-2".settings]
-        background_color = "surface_variant"
+        background_color = "surface_container"
         background_opacity = 0.88
         background_radius = 12.0
         center_password_text = false
@@ -112,7 +112,7 @@ widget_order = [ "lockscreen-login-box@DP-2", "lockscreen-login-box@HDMI-A-1" ]
     type = "login_box"
 
         [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1".settings]
-        background_color = "surface_variant"
+        background_color = "surface_container"
         background_opacity = 0.88
         background_radius = 12.0
         center_password_text = false
@@ -130,9 +130,12 @@ widget_order = [ "lockscreen-login-box@DP-2", "lockscreen-login-box@HDMI-A-1" ]
 [nightlight]
 enabled = true
 
+[plugin_settings."noctalia/screen_recorder"]
+video_source = "region"
+
 [plugins]
 auto_update = "all"
-enabled = [ "oar/hello-world" ]
+enabled = [ "oar/hello-world", "zyrex/run-path", "noctalia/screen_recorder" ]
 
     [[plugins.source]]
     kind = "git"
@@ -158,6 +161,8 @@ password_style = "random"
 
     [shell.window_switcher]
     mru = true
+    show_count = false
+    style = "compact"
 
 [theme]
 builtin = "Catppuccin"
@@ -170,16 +175,16 @@ wallpaper_scheme = "m3-rainbow"
 directory = "~/Pictures/wallpapers"
 
     [wallpaper.default]
-    path = "/home/oar/Pictures/wallpapers/cachy.jpg"
+    path = "/home/oar/Pictures/wallpapers/poison2.jpg"
 
     [wallpaper.last]
-    path = "/home/oar/Pictures/wallpapers/cachy.jpg"
+    path = "/home/oar/Pictures/wallpapers/poison2.jpg"
 
     [wallpaper.monitors.DP-2]
-    path = "/home/oar/Pictures/wallpapers/cachy.jpg"
+    path = "/home/oar/Pictures/wallpapers/poison2.jpg"
 
     [wallpaper.monitors.HDMI-A-1]
-    path = "/home/oar/Pictures/wallpapers/cachy.jpg"
+    path = "/home/oar/Pictures/wallpapers/poison2.jpg"
 
 [widget.active_window]
 enabled = false
@@ -198,8 +203,13 @@ type = "oar/hello-world:hello"
 color = "on_surface"
 
 [widget.media]
-max_length = 731
+max_length = 727
+min_length = 79
 show_progress = true
+
+    [widget.media.actions]
+    scroll_down = "media next"
+    scroll_up = "media previous"
 
 [widget.network]
 color = "on_surface"

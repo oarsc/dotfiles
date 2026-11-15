@@ -1,7 +1,14 @@
 -- Window rules wiki https://wiki.hypr.land/Configuring/Basics/Window-Rules/
 
--- Generic floating position
-hl.window_rule({ match = { float = true }, center = true, persistent_size = true })
+-- Generic floating position, except Godot
+hl.window_rule({
+    match = {
+        float = true,
+        class = "negative:^(Godot)$",
+    },
+    center = true,
+    persistent_size = true,
+})
 
 -- Picture-in-Picture
 hl.window_rule({

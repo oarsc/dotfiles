@@ -14,7 +14,7 @@ hl.config({
         mouse_move_focuses_monitor = false,
         focus_on_activate = true,
         middle_click_paste = false,
-        enable_swallow = true,
+        enable_swallow = false,
         disable_hyprland_logo = false,
         swallow_regex = "(kitty|ghostty|[Kk]onsole|Alacritty|gnome-terminal|xfce[0-9]?-terminal)",
         vrr = 3,

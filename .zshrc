@@ -45,3 +45,4 @@ function nohup {
 alias zshrc="source ~/.zshrc"
 alias vi=vim
 alias socks="ssh -CqND 9999 127.0.0.1"
+alias oc="opencode -c"

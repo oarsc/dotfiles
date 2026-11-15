@@ -9,14 +9,14 @@ fi
 
 STEAM_PATH="$HOME/.steam/steam/"
 PREFIX_PATH="/media/oar/HDD-ext4/cachy/games/proton-prefixes/"
-PROTON_PATH="$HOME/.local/share/Steam/steamapps/common/Proton - Experimental/proton"
+PROTON_PATH="/media/oar/HDD-ext4/cachy/steam/steamapps/common/Proton - Experimental/proton"
 
 if [ ! -f "$PROTON_PATH" ]; then
     echo "Proton not found: $PROTON_PATH"
     exit 1
 fi
 
-mkdir -p "$PREFIX_PATH"
+mkdir -p "$PREFIX_PATH$1"
 
 STEAM_COMPAT_CLIENT_INSTALL_PATH="$STEAM_PATH" \
 STEAM_COMPAT_DATA_PATH="$PREFIX_PATH$1" \
